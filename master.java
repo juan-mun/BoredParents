@@ -3,5 +3,6 @@ public class HolaMundo {
         // Imprime el mensaje "¡Hola, mundo!" en la consola
         System.out.println("¡Hola, mundo!");
 	System.out.prinln("Hola qué hace");
+	System.out.prinln("Hola cómo vas");
     }
 }
