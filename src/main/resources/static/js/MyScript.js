@@ -44,6 +44,7 @@ $(document).ready(function() {
 
     $('#botonGuardar').click(function() {
         if (eventoActual) {
+            console.log(eventoActual.id+"EventoActual")
             eventoActual.title = $('#editNombreActividad').val();
             eventoActual.description = $('#editDescripcionActividad').val();
             eventoActual.start = moment($('#editFechaActividad').val() + ' ' + $('#editHoraActividad').val()).format();
@@ -54,8 +55,6 @@ $(document).ready(function() {
             } else {
                 delete eventoActual.end; // Elimina la hora de terminación si no se especificó
             }
-            $('#CalendarioWeb').fullCalendar('updateEvent', eventoActual);
-            $('#modalEvento').modal('hide');
         }
     });
 
@@ -68,7 +67,7 @@ $(document).ready(function() {
         var nombreActividad = $('#nombreActividad').val();
         var descripcionActividad = $('#descripcionActividad').val();
         var fechaActividad = $('#fechaActividad').val();
-        var horaActividad = $('#horaActividad').val();
+        var horaActividad = $('#horaActividad').val()+":00";
 
         var fechaYHoraInicio = moment(fechaActividad + ' ' + horaActividad);
 

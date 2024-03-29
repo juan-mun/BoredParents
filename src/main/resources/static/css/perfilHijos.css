@@ -1,0 +1,98 @@
+body {
+    background: linear-gradient(to top, #01bcff, #0000fe); 
+    margin: 0;
+    padding-top: 50px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 50px; /* Ajusta este valor para más espacio desde la izquierda */
+}
+
+.profile-container {
+    background-color: #fff9ff; /* Fondo ligeramente transparente */
+    border-radius: 50%; /* Hace el contenedor redondo */
+    width: 300px; /* Ajusta esto según el tamaño deseado */
+    height: 300px; /* Asegúrate de que width y height sean iguales para un círculo perfecto */
+    display: flex;
+    flex-direction: column; /* Organiza los hijos en columna */
+    justify-content: center; /* Centra los hijos verticalmente */
+    align-items: center; /* Centra los hijos horizontalmente */
+    position: relative; /* Permite posicionar absolutamente los hijos */
+    overflow: hidden; /* Oculta los elementos que desborden el contenedor */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid #000000; /* Borde azul, ajusta el color y grosor como desees */
+}
+
+.profile-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.profile-circle {
+    width: 40%; /* Ajusta esto para el tamaño de la imagen */
+    position: absolute; /* Posicionamiento absoluto */
+    top: 10%; /* Ajusta para la posición vertical de la imagen */
+    z-index: 2; /* Asegura que la imagen esté sobre los otros elementos */
+}
+
+.profile-image {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.profile-info {
+    position: absolute;
+    top: 50%; /* Inicia en el centro y ajusta si es necesario */
+    z-index: 1;
+    text-align: center; /* Alinea el texto al centro */
+    color: white;
+}
+
+.profile-name,
+.profile-other-info {
+    color: #000; /* Texto en negro */
+}
+
+.btn-primary {
+    background-color: #3498DB; /* Color de fondo del botón */
+    border: none;
+    padding: 10px 20px;
+    color: #000; /* Texto en negro para el botón */
+    margin-top: 10px;
+}
+
+.navbar {
+    position: fixed; /* Hace que la navbar sea fija en la parte superior */
+    top: 0;
+    left: 0;
+    width: 100%; /* La navbar se extiende a lo largo de toda la anchura */
+    padding: 1rem 1.5rem;
+    background: rgba(0, 123, 255, 0.5); /* Fondo semi-transparente con un tono de azul de Bootstrap */
+    z-index: 1000; /* Asegura que la navbar esté por encima de otros elementos */
+}
+
+.navbar-brand {
+    font-size: 3rem; /* Tamaño más grande para el título */
+    color: white; /* Color blanco para el texto */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), /* Efecto luminoso */
+                 0 0 15px rgba(255, 255, 255, 0.8),
+                 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+  
+.nav-link {
+    color: white;
+    margin-right: 1rem; /* Espaciado entre los enlaces */
+}
+  
+.nav-link:hover {
+    color: #ddd; /* Color al pasar el ratón por encima */
+}
+  
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding-right: .5rem; /* Ajustar el espaciado para pantallas grandes */
+        padding-left: .5rem;
+    }
+}

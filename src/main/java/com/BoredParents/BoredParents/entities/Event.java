@@ -70,4 +70,9 @@ public class Event {
         return activity;
     }
 
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+      
+
 }
