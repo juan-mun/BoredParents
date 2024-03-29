@@ -64,18 +64,59 @@ $(document).ready(function() {
         var nombreActividad = $('#nombreActividad').val();
         var descripcionActividad = $('#descripcionActividad').val();
         var fechaActividad = $('#fechaActividad').val();
-        var horaActividad = $('#horaActividad').val();
+        var horaActividad = $('#horaActividad').val() + ":00"; // Asume que #horaActividad tiene un valor como '14:30'
+
 
         var fechaYHoraInicio = moment(fechaActividad + ' ' + horaActividad);
 
-        var evento = {
-            title: nombreActividad,
-            start: fechaYHoraInicio.format(),
-            description: descripcionActividad,
+        var nuevoEvento = {
+            nombre: nombreActividad,
+            descripcion: descripcionActividad,
+            fechaActividad: fechaActividad,
+            horaActividad: horaActividad,
         };
+        
+        console.log(nuevoEvento.fechaActividad);
+        console.log(nuevoEvento.horaActividad);
 
-        $('#CalendarioWeb').fullCalendar('renderEvent', evento, true); 
+        $.ajax({
+            url: '/events/addEvents',
+            type: 'POST',
+            dataType:'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(nuevoEvento),
+            success: function(eventoGuardado) {
+                // Agrega el evento al calendario si se guarda exitosamente
+                $('#CalendarioWeb').fullCalendar('renderEvent', {
+                    id: eventoGuardado.id,
+                    title: eventoGuardado.nombre,
+                    start: moment(eventoGuardado.fechaActividad + 'T' + eventoGuardado.horaActividad),
+                    description: eventoGuardado.descripcion,
+                }, true);
+                this.reset();
+            },
+            error: function(error) {
+                console.log(error)
+            } 
+        });
+    });
 
-        this.reset();
+    $.ajax({
+        url: '/events/getEvents',
+        type: 'GET',
+        success: function(data) {
+            data.forEach(function(evento) {
+                var eventoCalendario = {
+                    id: evento.id,
+                    title: evento.nombre,
+                    start: moment(evento.fechaActividad + 'T' + evento.horaActividad),
+                    description: evento.descripcion
+                };
+                $('#CalendarioWeb').fullCalendar('renderEvent', eventoCalendario, true);
+            });
+        },
+        error: function() {
+            alert('No se pudieron cargar los eventos');
+        }
     });
 });
