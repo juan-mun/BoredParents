@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    loadActivities();
     var eventoActual;
     var calendario = $('#CalendarioWeb').fullCalendar({
         header: {
@@ -61,11 +62,13 @@ $(document).ready(function() {
     $('form').on('submit', function(e) {
         e.preventDefault(); 
 
+
+        var activityId = $('#selectorActividad').val();
+    
         var nombreActividad = $('#nombreActividad').val();
         var descripcionActividad = $('#descripcionActividad').val();
         var fechaActividad = $('#fechaActividad').val();
-        var horaActividad = $('#horaActividad').val() + ":00"; // Asume que #horaActividad tiene un valor como '14:30'
-
+        var horaActividad = $('#horaActividad').val();
 
         var fechaYHoraInicio = moment(fechaActividad + ' ' + horaActividad);
 
@@ -74,10 +77,8 @@ $(document).ready(function() {
             descripcion: descripcionActividad,
             fechaActividad: fechaActividad,
             horaActividad: horaActividad,
+            activity_id: activityId,
         };
-        
-        console.log(nuevoEvento.fechaActividad);
-        console.log(nuevoEvento.horaActividad);
 
         $.ajax({
             url: '/events/addEvents',
@@ -86,7 +87,6 @@ $(document).ready(function() {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(nuevoEvento),
             success: function(eventoGuardado) {
-                // Agrega el evento al calendario si se guarda exitosamente
                 $('#CalendarioWeb').fullCalendar('renderEvent', {
                     id: eventoGuardado.id,
                     title: eventoGuardado.nombre,
@@ -106,6 +106,7 @@ $(document).ready(function() {
         type: 'GET',
         success: function(data) {
             data.forEach(function(evento) {
+                console.log(evento.id+" evento");
                 var eventoCalendario = {
                     id: evento.id,
                     title: evento.nombre,
@@ -120,3 +121,40 @@ $(document).ready(function() {
         }
     });
 });
+
+function loadActivities() {
+    $.ajax({
+        url: '/activities/getActivities',
+        type: 'GET',
+        success: function(activities) {
+            var list = $('#listaActividades');
+            list.empty(); 
+            activities.forEach(function(activity) {
+                console.log(activity.id + " Actividad");
+                var listItem = $('<li class="list-group-item">' + activity.nombre + '</li>');
+                listItem.dblclick(function() {
+                    console.log(activity.id);
+                    // Configura el modal con la información de la actividad
+                    $('#nombreActividad').val(activity.nombre);
+                    $('#descripcionActividad').val(activity.descripcion);
+                    // Abre el modal
+                    $('#modalEvento').modal('show');
+                    // Configura el modal para una nueva entrada
+                    $('#modalEventoLabel').text('Crear Nuevo Evento');
+                    $('#editNombreActividad').val(activity.nombre);
+                    $('#editDescripcionActividad').val(activity.descripcion);
+                    $('#editFechaActividad').val('');
+                    $('#editHoraActividad').val('');
+                    $('#editHoraTerminado').val('');
+                    // Asegúrate de configurar el ID de la actividad seleccionada
+                    $('#actividadSeleccionada').val(activity.nombre);
+                });
+                list.append(listItem);
+            });
+        },
+        error: function() {
+            alert('Error al cargar las actividades');
+        }
+    });
+}
+
