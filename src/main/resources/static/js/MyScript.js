@@ -64,7 +64,8 @@ $(document).ready(function() {
         var nombreActividad = $('#nombreActividad').val();
         var descripcionActividad = $('#descripcionActividad').val();
         var fechaActividad = $('#fechaActividad').val();
-        var horaActividad = $('#horaActividad').val();
+        var horaActividad = $('#horaActividad').val() + ":00"; // Asume que #horaActividad tiene un valor como '14:30'
+
 
         var fechaYHoraInicio = moment(fechaActividad + ' ' + horaActividad);
 
@@ -75,6 +76,9 @@ $(document).ready(function() {
             horaActividad: horaActividad,
         };
         
+        console.log(nuevoEvento.fechaActividad);
+        console.log(nuevoEvento.horaActividad);
+
         $.ajax({
             url: '/events/addEvents',
             type: 'POST',
