@@ -6,22 +6,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    padding-left: 50px; /* Ajusta este valor para más espacio desde la izquierda */
+    padding-left: 50px;
 }
 
 .profile-container {
-    background-color: #fff9ff; /* Fondo ligeramente transparente */
-    border-radius: 50%; /* Hace el contenedor redondo */
-    width: 300px; /* Ajusta esto según el tamaño deseado */
-    height: 300px; /* Asegúrate de que width y height sean iguales para un círculo perfecto */
+    background: linear-gradient(to top, #01bcff, #0000fe); 
+    border-radius: 50%; 
+    width: 300px;
+    height: 300px; 
     display: flex;
-    flex-direction: column; /* Organiza los hijos en columna */
-    justify-content: center; /* Centra los hijos verticalmente */
-    align-items: center; /* Centra los hijos horizontalmente */
-    position: relative; /* Permite posicionar absolutamente los hijos */
-    overflow: hidden; /* Oculta los elementos que desborden el contenedor */
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    position: relative; 
+    overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 2px solid #000000; /* Borde azul, ajusta el color y grosor como desees */
 }
 
 .profile-container:hover {
@@ -30,36 +29,36 @@ body {
 }
 
 .profile-circle {
-    width: 40%; /* Ajusta esto para el tamaño de la imagen */
-    position: absolute; /* Posicionamiento absoluto */
-    top: 10%; /* Ajusta para la posición vertical de la imagen */
-    z-index: 2; /* Asegura que la imagen esté sobre los otros elementos */
-}
-
-.profile-image {
-    width: 100%;
-    border-radius: 50%;
+    width: 70%; /* o el porcentaje/tamaño que ya tenías */
+    height: 70%;
+    position: absolute;
+    top: 5%; /* Reduce este porcentaje para subir el icono */
+    left: 15%; /* Centrado horizontal */
+    z-index: 2;
 }
 
 .profile-info {
     position: absolute;
-    top: 50%; /* Inicia en el centro y ajusta si es necesario */
-    z-index: 1;
-    text-align: center; /* Alinea el texto al centro */
-    color: white;
+    width: 100%; /* Ancho total del contenedor */
+    top: calc(5% + 70%); /* Modifica este valor para subir el texto */
+    /* La suma del porcentaje superior y la altura debe ser menor que 100% */
+    text-align: center; /* Alineación horizontal del texto */
+    z-index: 3;
 }
 
-.profile-name,
-.profile-other-info {
-    color: #000; /* Texto en negro */
+.profile-name {
+    font-size: 2rem; /* Tamaño de fuente para el nombre */
+    color: #ffffff; /* Color del texto */
+    display: inline-block; /* Permite la alineación del texto */
+    margin-top: 10px; /* Ajusta la distancia entre el icono y el texto */
 }
 
-.btn-primary {
-    background-color: #3498DB; /* Color de fondo del botón */
-    border: none;
-    padding: 10px 20px;
-    color: #000; /* Texto en negro para el botón */
-    margin-top: 10px;
+
+.profile-image {
+    width: 100%; /* Ajusta la imagen para que llene el ancho de .profile-circle */
+    height: 100%; /* Ajusta la imagen para que llene el alto de .profile-circle */
+    border-radius: 50%; /* Mantiene la imagen redonda */
+    object-fit: cover; /* Cubre el área del contenedor sin perder la proporción */
 }
 
 .navbar {

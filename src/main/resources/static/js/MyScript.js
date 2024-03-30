@@ -36,9 +36,32 @@ $(document).ready(function() {
 
     $('#botonBorrar').click(function() {
         if (eventoActual) {
-            $('#CalendarioWeb').fullCalendar('removeEvents', eventoActual._id);
-            $('#modalEvento').modal('hide');
-            eventoActual = null;    
+            var nombreActividad = $('#editNombreActividad').val();
+            var descripcionActividad = $('#editDescripcionActividad').val();
+            var fechaActividad = $('#editFechaActividad').val();
+            var horaActividad = $('#editHoraActividad').val()+":00";
+
+            var borrarEvento = {
+                nombre: nombreActividad,
+                descripcion: descripcionActividad,
+                fechaActividad: fechaActividad,
+                horaActividad: horaActividad,
+            };
+            $.ajax({
+                url: '/events/deleteEvent',
+                type: 'DELETE',
+                dataType:'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(borrarEvento),
+                success: function() {
+                    $('#CalendarioWeb').fullCalendar('removeEvents', eventoActual._id);
+                    $('#modalEvento').modal('hide');
+                    eventoActual = null;    
+                },
+                error: function(error) {
+                    console.log(error)
+                } 
+            });
         }
     });
 
