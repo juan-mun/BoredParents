@@ -1,0 +1,57 @@
+/* Estableciendo el fondo del cuerpo y configurando Flexbox para el layout */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background-image: url('images/Fondo.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Cambiando el color de la barra de navegación a un azul más claro */
+.navbar {
+    background-color: #80bdff; /* Un azul claro ejemplar */
+}
+
+/* Ajustando el main para que se expanda y empuje el footer hacia abajo */
+main.container {
+    flex: 1;
+}
+
+/* Configuración de la entrada del blog y la barra lateral */
+.article, .sidebar {
+    padding: 20px;
+    background-color: transparent; /* Para contenido sobre el fondo */
+}
+
+/* Eliminando estilos de borde y fondo para contenedores específicos si fuera necesario */
+.main-container, .quienes-somos-container, #contenido-quienes-somos {
+    border: none;
+    background-color: transparent;
+}
+
+/* Estilos del footer para mantenerlo en el fondo */
+footer {
+    flex-shrink: 0;
+    text-align: center;
+    width: 100%;
+    background-color: #343a40; /* Manteniendo el fondo oscuro para contraste */
+    color: white;
+    padding: 10px 0;
+}
+
+/* Adicionales */
+.btn-primary {
+    background-color: #007bff; /* Botón primario para acciones clave */
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
