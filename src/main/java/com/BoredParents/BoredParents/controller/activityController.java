@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.BoredParents.BoredParents.Entities.Actividad;
 import com.BoredParents.BoredParents.service.activityService;
 
 @RestController
@@ -17,7 +18,7 @@ public class activityController {
     private activityService activityService;
 
     @GetMapping("/getActivities")
-    public List<Activity> getAllActivities(){
+    public List<Actividad> getAllActivities(){
         return activityService.getAllActivities();
     }
 

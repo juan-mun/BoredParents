@@ -20,13 +20,6 @@ public class Infantes {
     public Infantes() {
     }
 
-    // Constructor con todos los campos
-    public Infantes(String nombre, String apellido, Date fecha_nacimiento) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.fecha_nacimiento = fecha_nacimiento;
-    }
-
     // Getters y setters para todos los campos
     public int getId_infante() {
         return id_infante;

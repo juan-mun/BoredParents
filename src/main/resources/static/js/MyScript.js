@@ -115,7 +115,6 @@ $(document).ready(function() {
                     start: moment(eventoGuardado.fechaActividad + 'T' + eventoGuardado.horaActividad),
                     description: eventoGuardado.descripcion,
                 }, true);
-                this.reset();
             },
             error: function(error) {
                 console.log(error)

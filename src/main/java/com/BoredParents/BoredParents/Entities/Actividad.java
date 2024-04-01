@@ -1,4 +1,6 @@
 package com.BoredParents.BoredParents.Entities;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,15 +18,10 @@ public class Actividad {
 
     @ManyToOne
     @JoinColumn(name = "id_evento")
+    @JsonIgnoreProperties("actividades")
     private eventos evento;
 
     public Actividad() {
-    }
-
-    public Actividad(int id_actividad, String nombre, String descripcion) {
-        this.id_actividad = id_actividad;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
     }
 
     public int getId_actividad() {

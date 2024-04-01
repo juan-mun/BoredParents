@@ -14,14 +14,6 @@ public class Login {
     @JoinColumn(name = "ID_Tutor")
     private Usuarios usuario;
 
-    // Constructor con todos los campos
-    public Login(int id_login, String correo, String contraseña, int ultimo_acceso) {
-        this.id_login = id_login;
-        this.correo = correo;
-        this.contraseña = contraseña;
-        this.ultimo_acceso = ultimo_acceso;
-    }
-
     // Getters y setters para todos los campos
     public int getId_login() {
         return id_login;

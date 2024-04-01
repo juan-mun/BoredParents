@@ -1,9 +1,12 @@
 package com.BoredParents.BoredParents.Entities;
 
 import jakarta.persistence.*;
-import java.util.Date;
-import java.util.List;
+
+import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class eventos {
@@ -16,16 +19,10 @@ public class eventos {
     private Time horaActividad;
 
     @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL)
+     @JsonIgnoreProperties("evento")
     private List<Actividad> actividades;
 
     public eventos() {
-    }
-
-    public eventos(String nombre, String descripcion, Date fechaActividad, Time horaActividad) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.fechaActividad = fechaActividad;
-        this.horaActividad = horaActividad;
     }
 
     public int getId_evento() {

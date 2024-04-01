@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.BoredParents.BoredParents.Entities.eventos;
 import com.BoredParents.BoredParents.service.eventService;
 
 @RestController
@@ -19,12 +20,12 @@ public class eventController {
     private eventService eventService;
 
     @GetMapping("/getEvents")
-    public List<Event> getAllEvents(){
+    public List<eventos> getAllEvents(){
         return eventService.getAllEvents();
     }
 
     @PostMapping("/addEvents")
-    public Event saveEvent(@RequestBody Event e){
+    public eventos saveEvent(@RequestBody eventos e){
         return eventService.saveEvent(e);
     }
 

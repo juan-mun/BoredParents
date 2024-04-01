@@ -25,16 +25,6 @@ public class Usuarios {
     public Usuarios() {
     }
 
-    // Constructor con todos los campos
-    public Usuarios(String nombre, String apellido, String email, String contraseña, int fecha_nacimiento, int direccion) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.email = email;
-        this.contraseña = contraseña;
-        this.fecha_nacimiento = fecha_nacimiento;
-        this.direccion = direccion;
-    }
-
     // Getters y setters para todos los campos
     public int getID_Tutor() {
         return ID_Tutor;
