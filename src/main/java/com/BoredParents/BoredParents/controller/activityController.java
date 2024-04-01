@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.BoredParents.BoredParents.entities.Activity;
 import com.BoredParents.BoredParents.service.activityService;
 
 @RestController
