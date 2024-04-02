@@ -1,31 +1,29 @@
 package com.BoredParents.BoredParents.Entities;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 public class Infantes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_infante;
+    private Long id_infante;
     private String nombre;
     private String apellido;
-    private Date fecha_nacimiento;
+    private LocalDate fecha_nacimiento;
 
     @ManyToOne
     @JoinColumn(name = "ID_Tutor")
     private Usuarios usuario;
 
-    // Constructor vacío
-    public Infantes() {
-    }
-
     // Getters y setters para todos los campos
-    public int getId_infante() {
+    public Long getId_infante() {
         return id_infante;
     }
 
-    public void setId_infante(int id_infante) {
+    public void setId_infante(Long id_infante) {
         this.id_infante = id_infante;
     }
 
@@ -45,11 +43,11 @@ public class Infantes {
         this.apellido = apellido;
     }
 
-    public Date getFecha_nacimiento() {
+    public LocalDate getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
+    public void setFecha_nacimiento(LocalDate fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
