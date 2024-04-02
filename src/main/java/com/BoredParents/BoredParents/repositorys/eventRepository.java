@@ -20,5 +20,9 @@ public class eventRepository {
     public eventos save(eventos e){
         return eventCRUDrepository.save(e);
     }
+
+    public void delete(Long id){
+        eventCRUDrepository.deleteById(id);
+    }
     
 }
