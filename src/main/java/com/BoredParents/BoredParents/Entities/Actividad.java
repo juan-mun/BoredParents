@@ -12,7 +12,7 @@ import jakarta.persistence.JoinColumn;
 public class Actividad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_actividad;
+    private Long id_actividad;
     private String nombre;
     private String descripcion;
 
@@ -24,7 +24,7 @@ public class Actividad {
     public Actividad() {
     }
 
-    public int getId_actividad() {
+    public Long getId_actividad() {
         return id_actividad;
     }
 
@@ -40,7 +40,7 @@ public class Actividad {
         return evento;
     }
 
-    public void setId_actividad(int id_actividad) {
+    public void setId_actividad(Long id_actividad) {
         this.id_actividad = id_actividad;
     }
 
