@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    loadActivities();
     var eventoActual;
     var calendario = $('#CalendarioWeb').fullCalendar({
         header: {
@@ -33,41 +34,81 @@ $(document).ready(function() {
         },
     });
 
-    $('#botonBorrar').click(function() {
-        if (eventoActual) {
-            $('#CalendarioWeb').fullCalendar('removeEvents', eventoActual._id);
-            $('#modalEvento').modal('hide');
-            eventoActual = null;    
-        }
-    });
+    $(document).ready(function() {
+        // Función que se ejecuta al hacer clic en el botón de borrar
+        $('#botonBorrar').click(function() {
+            // Verificar si hay un evento seleccionado actualmente
+            if (eventoActual) {
+    
+                // Hacer una petición AJAX al servidor para borrar el evento
+                $.ajax({
+                    url: '/events/'+eventoActual.id, 
+                    type: 'DELETE', 
+                    success: function() {
+                        $('#CalendarioWeb').fullCalendar('removeEvents', eventoActual.id);
+                        $('#modalEvento').modal('hide'); 
+                        eventoActual = null; 
+                    },
+                    error: function(error) {
+                        // En caso de un error, mostrarlo en la consola
+                        console.log(error);
+                    } 
+                });
+                console.log(eventoActual.id + " Evento a borrar");
+            }
+        });
+    });    
 
     $('#botonGuardar').click(function() {
         if (eventoActual) {
-            eventoActual.title = $('#editNombreActividad').val();
-            eventoActual.description = $('#editDescripcionActividad').val();
-            eventoActual.start = moment($('#editFechaActividad').val() + ' ' + $('#editHoraActividad').val()).format();
-            var horaTerminado = $('#editHoraTerminado').val();
-            if(horaTerminado) {
-                var fechaTerminado = moment($('#editFechaActividad').val() + ' ' + horaTerminado);
-                eventoActual.end = fechaTerminado.toDate();
-            } else {
-                delete eventoActual.end; // Elimina la hora de terminación si no se especificó
-            }
-            $('#CalendarioWeb').fullCalendar('updateEvent', eventoActual);
-            $('#modalEvento').modal('hide');
+            console.log(eventoActual.id+"EventoActual")
+            var nombre = $('#editNombreActividad').val();
+            var descripcion = $('#editDescripcionActividad').val();
+            var fechaActividad = $('#editFechaActividad').val();
+            var horaActividad = $('#editHoraActividad').val()+":00";
+
+            var start = moment(fechaActividad + 'T' + horaActividad);
+
+            var updateEvento = {
+                id_evento: eventoActual.id,
+                nombre: nombre,
+                descripcion: descripcion,
+                fechaActividad: fechaActividad,
+                horaActividad: horaActividad,
+            };
+
+            $.ajax({
+                url:'/events/updateEvents',
+                type: 'PUT',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(updateEvento),
+                success: function(){
+
+                    eventoActual.title = nombre;
+                    eventoActual.start = start;
+                    eventoActual.description = descripcion;
+
+                    // Informa a FullCalendar sobre la actualización del evento
+                    $('#CalendarioWeb').fullCalendar('updateEvent', eventoActual);
+
+                    // Cierra el modal después de la actualización
+                    $('#modalEvento').modal('hide'); 
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
         }
     });
 
     $('form').on('submit', function(e) {
         e.preventDefault(); 
-
+    
         var nombreActividad = $('#nombreActividad').val();
         var descripcionActividad = $('#descripcionActividad').val();
         var fechaActividad = $('#fechaActividad').val();
-        var horaActividad = $('#horaActividad').val() + ":00"; // Asume que #horaActividad tiene un valor como '14:30'
-
-
-        var fechaYHoraInicio = moment(fechaActividad + ' ' + horaActividad);
+        var horaActividad = $('#horaActividad').val()+":00";
 
         var nuevoEvento = {
             nombre: nombreActividad,
@@ -75,9 +116,6 @@ $(document).ready(function() {
             fechaActividad: fechaActividad,
             horaActividad: horaActividad,
         };
-        
-        console.log(nuevoEvento.fechaActividad);
-        console.log(nuevoEvento.horaActividad);
 
         $.ajax({
             url: '/events/addEvents',
@@ -86,14 +124,17 @@ $(document).ready(function() {
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(nuevoEvento),
             success: function(eventoGuardado) {
-                // Agrega el evento al calendario si se guarda exitosamente
                 $('#CalendarioWeb').fullCalendar('renderEvent', {
-                    id: eventoGuardado.id,
+                    id: eventoGuardado.id_evento,
                     title: eventoGuardado.nombre,
                     start: moment(eventoGuardado.fechaActividad + 'T' + eventoGuardado.horaActividad),
                     description: eventoGuardado.descripcion,
                 }, true);
-                this.reset();
+
+                $('#nombreActividad').val('');
+                $('#descripcionActividad').val('');
+                $('#fechaActividad').val('');
+                $('#horaActividad').val('');
             },
             error: function(error) {
                 console.log(error)
@@ -106,8 +147,9 @@ $(document).ready(function() {
         type: 'GET',
         success: function(data) {
             data.forEach(function(evento) {
+                console.log(evento.id_evento+" evento");
                 var eventoCalendario = {
-                    id: evento.id,
+                    id: evento.id_evento,
                     title: evento.nombre,
                     start: moment(evento.fechaActividad + 'T' + evento.horaActividad),
                     description: evento.descripcion
@@ -120,3 +162,79 @@ $(document).ready(function() {
         }
     });
 });
+
+function configureSaveButton() {
+    $('#botonGuardar').click(function() {
+        var nombre = $('#editNombreActividad').val();
+        var descripcion = $('#editDescripcionActividad').val();
+        var fechaActividad = $('#editFechaActividad').val();
+        var horaActividad = $('#editHoraActividad').val()+":00";
+
+        var nuevoEvento = {
+            nombre: nombre,
+            descripcion: descripcion,
+            fechaActividad: fechaActividad,
+            horaActividad: horaActividad,
+
+        };
+
+        $.ajax({
+            url: '/events/addEvents',
+            type: 'POST',
+            dataType:'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(nuevoEvento),
+            success: function(eventoGuardado) {
+                $('#CalendarioWeb').fullCalendar('renderEvent', {
+                    id: eventoGuardado.id_evento,
+                    title: eventoGuardado.nombre,
+                    start: moment(eventoGuardado.fechaActividad + 'T' + eventoGuardado.horaActividad),
+                    description: eventoGuardado.descripcion,
+                }, true);
+            },
+            error: function(error) {
+                console.log(error)
+            } 
+        });
+    });
+}
+
+function loadActivities() {
+    $.ajax({
+        url: '/activities/getActivities',
+        type: 'GET',
+        success: function(activities) {
+            var list = $('#listaActividades');
+            list.empty(); 
+            activities.forEach(function(activity) {
+                console.log(activity.id_actividad + " Actividad");
+                var listItem = $('<li class="list-group-item">' + activity.nombre + '</li>');
+                listItem.dblclick(function() {
+                    console.log(activity.id);
+                    // Configura el modal con la información de la actividad
+                    $('#nombreActividad').val(activity.nombre);
+                    $('#descripcionActividad').val(activity.descripcion);
+                    // Abre el modal
+                    $('#modalEvento').modal('show');
+                    // Configura el modal para una nueva entrada
+                    $('#modalEventoLabel').text('Crear Nuevo Evento');
+                    $('#editNombreActividad').val(activity.nombre);
+                    $('#editDescripcionActividad').val(activity.descripcion);
+                    $('#editFechaActividad').val('');
+                    $('#editHoraActividad').val('');
+                    $('#editHoraTerminado').val('');
+                    // Asegúrate de configurar el ID de la actividad seleccionada
+                    $('#actividadSeleccionada').val(activity.nombre);
+
+                    configureSaveButton();
+                });
+                list.append(listItem);
+            });
+        },
+        error: function() {
+            alert('Error al cargar las actividades');
+        }
+    });
+
+}
+

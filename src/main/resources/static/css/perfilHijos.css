@@ -1,0 +1,97 @@
+body {
+    background: linear-gradient(to top, #01bcff, #0000fe); 
+    margin: 0;
+    padding-top: 50px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 50px;
+}
+
+.profile-container {
+    background: linear-gradient(to top, #01bcff, #0000fe); 
+    border-radius: 50%; 
+    width: 300px;
+    height: 300px; 
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    position: relative; 
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.profile-circle {
+    width: 70%; /* o el porcentaje/tamaño que ya tenías */
+    height: 70%;
+    position: absolute;
+    top: 5%; /* Reduce este porcentaje para subir el icono */
+    left: 15%; /* Centrado horizontal */
+    z-index: 2;
+}
+
+.profile-info {
+    position: absolute;
+    width: 100%; /* Ancho total del contenedor */
+    top: calc(5% + 70%); /* Modifica este valor para subir el texto */
+    /* La suma del porcentaje superior y la altura debe ser menor que 100% */
+    text-align: center; /* Alineación horizontal del texto */
+    z-index: 3;
+}
+
+.profile-name {
+    font-size: 2rem; /* Tamaño de fuente para el nombre */
+    color: #ffffff; /* Color del texto */
+    display: inline-block; /* Permite la alineación del texto */
+    margin-top: 10px; /* Ajusta la distancia entre el icono y el texto */
+}
+
+
+.profile-image {
+    width: 100%; /* Ajusta la imagen para que llene el ancho de .profile-circle */
+    height: 100%; /* Ajusta la imagen para que llene el alto de .profile-circle */
+    border-radius: 50%; /* Mantiene la imagen redonda */
+    object-fit: cover; /* Cubre el área del contenedor sin perder la proporción */
+}
+
+.navbar {
+    position: fixed; /* Hace que la navbar sea fija en la parte superior */
+    top: 0;
+    left: 0;
+    width: 100%; /* La navbar se extiende a lo largo de toda la anchura */
+    padding: 1rem 1.5rem;
+    background: rgba(0, 123, 255, 0.5); /* Fondo semi-transparente con un tono de azul de Bootstrap */
+    z-index: 1000; /* Asegura que la navbar esté por encima de otros elementos */
+}
+
+.navbar-brand {
+    font-size: 3rem; /* Tamaño más grande para el título */
+    color: white; /* Color blanco para el texto */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), /* Efecto luminoso */
+                 0 0 15px rgba(255, 255, 255, 0.8),
+                 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+  
+.nav-link {
+    color: white;
+    margin-right: 1rem; /* Espaciado entre los enlaces */
+}
+  
+.nav-link:hover {
+    color: #ddd; /* Color al pasar el ratón por encima */
+}
+  
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding-right: .5rem; /* Ajustar el espaciado para pantallas grandes */
+        padding-left: .5rem;
+    }
+}

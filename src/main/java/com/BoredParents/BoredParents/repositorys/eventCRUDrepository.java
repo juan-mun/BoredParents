@@ -2,7 +2,7 @@ package com.BoredParents.BoredParents.repositorys;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.BoredParents.BoredParents.entities.Event;
+import com.BoredParents.BoredParents.Entities.eventos;
 
-public interface eventCRUDrepository extends CrudRepository<Event,Long>{   
+public interface eventCRUDrepository extends CrudRepository<eventos,Long>{   
 }
