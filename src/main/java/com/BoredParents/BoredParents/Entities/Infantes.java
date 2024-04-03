@@ -3,7 +3,6 @@ package com.BoredParents.BoredParents.Entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 public class Infantes {
