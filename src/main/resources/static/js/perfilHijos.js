@@ -1,4 +1,29 @@
 $(document).ready(function() {
+
+    $('#deleteProfileModal').on('show.bs.modal', function (e) {
+        var select = $('#perfilSelect');
+        select.empty(); // Limpiar las opciones anteriores
+        
+        // Hacer la llamada AJAX para obtener los perfiles
+        $.ajax({
+            url: 'Infantes/getInfantes',
+            type: 'GET',
+            success: function(data) {
+                // Llenar el select con los infantes recibidos
+                $.each(data, function(i, infante) {
+                    select.append($('<option>', {
+                        value: infante.id_infante,
+                        text: infante.nombre + ' ' + infante.apellido
+                    }));
+                });
+            },
+            error: function(error) {
+                console.error('Error al cargar los perfiles', error);
+                // Manejar el error
+            }
+        });
+    });
+
     // Evento del click del botón Guardar
     $('#guardarBtn').click(function(e) {
         e.preventDefault();
@@ -41,6 +66,28 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('#eliminarBtn').click(function() {
+        var selectedId = $('#perfilSelect').val();
+        console.log(selectedId);
+        if (selectedId) {
+            $.ajax({
+                url: 'Infantes/' + selectedId,
+                type: 'DELETE',
+                success: function(result) {
+                    console.log('Perfil eliminado con éxito');
+                    // Cerrar el modal y actualizar la lista de perfiles
+                    $('#deleteProfileModal').modal('hide');
+                    // Podrías llamar aquí a la función que carga los perfiles si existe o simplemente recargar la página
+                    location.reload(); // Esta es la forma más simple de actualizar la lista
+                },
+                error: function(error) {
+                    console.error('Error al eliminar el perfil', error);
+                    // Manejar el error, por ejemplo, mostrando un mensaje al usuario
+                }
+            });
+        }
+    });
     
     $.ajax({
         url:'Infantes/getInfantes',
@@ -73,6 +120,8 @@ $(document).ready(function() {
     });
     
 });
+
+
     
 
 
