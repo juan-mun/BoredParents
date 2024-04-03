@@ -1,19 +1,21 @@
 package com.BoredParents.BoredParents.Entities;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
 public class Usuarios {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID_Tutor;
+    private Long ID_Tutor;
     private String nombre;
     private String apellido;
     private String email;
     private String contraseña;
-    private int fecha_nacimiento;
-    private int direccion;
+    private LocalDate fecha_nacimiento;
+    private String direccion;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Infantes> infantes;
@@ -26,11 +28,11 @@ public class Usuarios {
     }
 
     // Getters y setters para todos los campos
-    public int getID_Tutor() {
+    public Long getID_Tutor() {
         return ID_Tutor;
     }
 
-    public void setID_Tutor(int ID_Tutor) {
+    public void setID_Tutor(Long ID_Tutor) {
         this.ID_Tutor = ID_Tutor;
     }
 
@@ -66,19 +68,19 @@ public class Usuarios {
         this.contraseña = contraseña;
     }
 
-    public int getFecha_nacimiento() {
+    public LocalDate getFecha_nacimiento() {
         return fecha_nacimiento;
     }
 
-    public void setFecha_nacimiento(int fecha_nacimiento) {
+    public void setFecha_nacimiento(LocalDate fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public int getDireccion() {
+    public String getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(int direccion) {
+    public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
 
