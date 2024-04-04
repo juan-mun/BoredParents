@@ -1,12 +1,8 @@
 package com.BoredParents.BoredParents.Entities;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 
 @Entity
 public class Actividad {
@@ -55,13 +51,13 @@ public class Actividad {
     public void setEvento(eventos evento) {
         this.evento = evento;
     }
-    @Override
-public String toString() {
-    return "Actividad{" +
-            "id_actividad=" + id_actividad +
-            ", nombre='" + nombre + '\'' +
-            ", descripcion='" + descripcion + '\'' +
-            '}';
-}
 
+    @Override
+    public String toString() {
+        return "Actividad{" +
+                "id_actividad=" + id_actividad +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                '}';
+    }
 }

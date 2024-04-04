@@ -1,12 +1,11 @@
 package com.BoredParents.BoredParents.Entities;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class eventos {
@@ -61,7 +60,7 @@ public class eventos {
     public void setActividades(List<Actividad> actividades) {
         this.actividades = actividades;
     }
-    
+
     @Override
     public String toString() {
         return "Evento{" +
@@ -80,5 +79,4 @@ public class eventos {
     public void setId_evento(Long id_evento) {
         this.id_evento = id_evento;
     }
-
 }
