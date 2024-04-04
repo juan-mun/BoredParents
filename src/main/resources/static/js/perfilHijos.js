@@ -43,7 +43,7 @@ $(document).ready(function() {
             data: JSON.stringify(datosInfante),
             success: function(response) {
                 console.log('Perfil guardado con éxito', datosInfante);
-                var perfilHTML = '<div class="col-md-4">' +
+                var perfilHTML = '<div class="col-md-4 clickable-profile " data-href="rutina.html">' +
                 '<div class="profile-container">' +
                     '<div class="profile-circle">' +
                         '<img src="css/images/usuarioIcon.png" alt="Profile" class="profile-image">' +
@@ -98,7 +98,7 @@ $(document).ready(function() {
     
             // Iterar sobre cada infante recibido
             $.each(data, function(i, infante) {
-                var perfilHTML = '<div class="col-md-4">' +
+                var perfilHTML = '<div class="col-md-4 clickable-profile " data-href="rutina.html">' +
                 '<div class="profile-container">' +
                     '<div class="profile-circle">' +
                         '<img src="css/images/usuarioIcon.png" alt="Profile" class="profile-image">' +
@@ -119,6 +119,10 @@ $(document).ready(function() {
             
     });
     
+    $(document).on('click', '.clickable-profile', function() {
+        window.location.href = $(this).data('href');
+    });
+
 });
 
 
