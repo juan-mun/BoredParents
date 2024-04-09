@@ -5,7 +5,11 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
+<<<<<<< HEAD
 		<version>3.2.3</version>
+=======
+		<version>3.2.4</version>
+>>>>>>> 91a23a9753bed70d84ccf03050a6417ff21f5ece
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.BoredParents</groupId>
@@ -33,8 +37,13 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
+<<<<<<< HEAD
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+=======
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+>>>>>>> 91a23a9753bed70d84ccf03050a6417ff21f5ece
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
