@@ -3,7 +3,10 @@ package com.BoredParents.BoredParents.Entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 91a23a9753bed70d84ccf03050a6417ff21f5ece
 
 @Entity
 public class Infantes {
@@ -17,10 +20,6 @@ public class Infantes {
     @ManyToOne
     @JoinColumn(name = "ID_Tutor")
     private Usuarios usuario;
-
-    // Constructor vacío
-    public Infantes() {
-    }
 
     // Getters y setters para todos los campos
     public Long getId_infante() {

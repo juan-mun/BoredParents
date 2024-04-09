@@ -74,9 +74,6 @@ body {
 .navbar-brand {
     font-size: 3rem; /* Tamaño más grande para el título */
     color: white; /* Color blanco para el texto */
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), /* Efecto luminoso */
-                 0 0 15px rgba(255, 255, 255, 0.8),
-                 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
   

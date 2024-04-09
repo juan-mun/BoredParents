@@ -191,6 +191,7 @@ function configureSaveButton() {
                     start: moment(eventoGuardado.fechaActividad + 'T' + eventoGuardado.horaActividad),
                     description: eventoGuardado.descripcion,
                 }, true);
+                $('#modalEvento').modal('hide'); 
             },
             error: function(error) {
                 console.log(error)
