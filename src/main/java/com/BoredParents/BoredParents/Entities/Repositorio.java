@@ -48,15 +48,12 @@ public class Repositorio {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Actividad getActividad() {
+    public List<Actividad> getActividad() {
         return actividad;
     }
 
-    public void setActividad(Actividad actividad) {
+    public void setActividad(List<Actividad> actividad) {
         this.actividad = actividad;
     }
-
-    
-
 
 }
