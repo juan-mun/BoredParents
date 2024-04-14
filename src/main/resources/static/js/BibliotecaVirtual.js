@@ -4,7 +4,7 @@ $(document).ready(function() {
   
 function cargarActividades() {
     $.ajax({
-      url: 'http://localhost:8080/actividades/getActivity',
+      url: 'actividades/getActivity',
       type: 'GET',
       dataType: 'json',
       success: function(actividades) {
