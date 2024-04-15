@@ -1,13 +1,9 @@
 package com.BoredParents.BoredParents.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Actividad {
@@ -18,11 +14,6 @@ public class Actividad {
     private String Descripcion;
     private String Categoria;
     private String Duracion;
-
-    @ManyToOne
-    @JoinColumn(name = "id_repositorio")
-    @JsonIgnoreProperties("actividad")
-    private Repositorio repositorio;
 
     public Long getId_actividad() {
         return id_actividad;
@@ -63,14 +54,4 @@ public class Actividad {
     public void setDuracion(String duracion) {
         Duracion = duracion;
     }
-
-    public Repositorio getRepositorio() {
-        return repositorio;
-    }
-
-    public void setRepositorio(Repositorio repositorio) {
-        this.repositorio = repositorio;
-    }
-
-    
 }

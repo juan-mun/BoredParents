@@ -9,7 +9,7 @@ function cargarActividades() {
       dataType: 'json',
       success: function(actividades) {
         const listaActividadesContainer = $('.lista-actividades');
-        listaActividadesContainer.empty(); // Limpia el contenedor antes de añadir nuevos elementos
+        listaActividadesContainer.empty(); 
         actividades.forEach(function(actividad) {
           const actividadElement = $(`
             <div class="actividad">
@@ -19,16 +19,6 @@ function cargarActividades() {
               <button type="button" class="btn btn-primary float-right">Añadir</button>
             </div>
           `);
-          actividadElement.hover(
-            function() {
-              // Acción al pasar el ratón por encima
-              $(this).append(`<div class="tooltip-custom">${actividad.descripcion}</div>`);
-            },
-            function() {
-              // Acción al salir el ratón
-              $(this).find('.tooltip-custom').remove();
-            }
-          );
           listaActividadesContainer.append(actividadElement);
         });
       },
