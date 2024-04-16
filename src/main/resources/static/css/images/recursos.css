@@ -1,0 +1,58 @@
+/* Estilos generales para el cuerpo de la página */
+body {
+    padding-top: 70px; /* Asegura que el contenido no se oculte detrás de la navbar */
+    font-family: Arial, sans-serif; /* Define una fuente legible y común */
+    background-color: #f8f9fa; /* Color de fondo suave para no cansar la vista */
+}
+
+/* Estilos para la barra de navegación */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Sombra sutil para dar profundidad */
+}
+
+/* Estilos para el encabezado principal */
+header {
+    background-color: #e9ecef; /* Fondo más oscuro que el cuerpo para destacar */
+    padding: 2rem 0; /* Espacio generoso para no sentirse apretado */
+    text-align: center; /* Centra el texto del encabezado */
+}
+
+/* Estilos para los títulos de las secciones */
+h2 {
+    color: #333; /* Color oscuro para contrastar con el fondo claro */
+    padding-bottom: 0.5rem; /* Pequeño espacio debajo para separar del contenido */
+    border-bottom: 2px solid #dee2e6; /* Línea sutil para definir áreas */
+    margin-bottom: 20px; /* Margen debajo del título para espaciar los contenidos */
+}
+
+/* Estilos para los iframes para garantizar que se vean bien en todos los dispositivos */
+iframe {
+    width: 100%; /* Ajusta el ancho al contenedor padre */
+    height: auto; /* Altura automática para mantener la proporción */
+    border: none; /* Elimina el borde por defecto */
+}
+
+/* Responsive design para columnas en la sección de podcasts y vídeos */
+@media (max-width: 768px) {
+    .col-md-6 {
+        margin-bottom: 20px; /* Agrega espacio debajo de cada elemento en dispositivos móviles */
+    }
+}
+
+/* Estilos para los enlaces de los artículos */
+#articulos a {
+    display: inline-block; /* Los enlaces se alinean en la misma línea pero respetan las propiedades de ancho y alto */
+    padding: 1rem; /* Espacio interno para mejorar la apariencia y la facilidad de uso */
+    width: 100px;
+    background-color: #f8f9fa; /* Color de fondo para diferenciar los artículos */
+    border: 1px solid #dee2e6; /* Borde delgado para definir los límites */
+    margin-bottom: 20px; /* Espacio entre los artículos para una mejor organización */
+    text-decoration: none; /* Elimina el subrayado de los enlaces */
+    color: #212529; /* Color de texto oscuro para una mejor legibilidad */
+    transition: background-color 0.3s; /* Transición suave para los cambios de color al pasar el ratón */
+}
+
+/* Estilos para los enlaces de los artículos al pasar el ratón */
+#articulos a:hover {
+    background-color: #e9ecef; /* Cambia el color de fondo al pasar el ratón */
+}

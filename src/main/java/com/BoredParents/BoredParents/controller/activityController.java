@@ -1,4 +1,4 @@
-package com.BoredParents.BoredParents.controller;
+package com.BoredParents.BoredParents.Controller;
 
 import java.util.List;
 
