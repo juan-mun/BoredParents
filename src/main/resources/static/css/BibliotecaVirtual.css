@@ -12,14 +12,22 @@ body {
 }
 
 .shelf {
+    display: flex;
+    flex-wrap: nowrap; 
+    justify-content: center;
+    align-items: center;
     background-color: #afcde7; /* color de los estantes */
     border: 3px solid #3d85c6; /* bordes de los estantes como en la imagen */
     padding: 2rem; /* espaciado interior */
     margin-bottom: 1rem; /* espaciado entre estantes */
     border-radius: 1rem; /* esquinas redondeadas para los estantes */
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); /* sombra interior para los estantes */
-    height: 150px; /* altura de los estantes */
+    height: 210px; /* altura de los estantes */
     position: relative; /* para posicionar el título */
+}
+
+.shelf:only-child {
+    justify-content: flex-start; /* Si solo hay un libro, alinea este a la izquierda */
 }
 
 .shelf:last-child {
@@ -110,4 +118,41 @@ h1 {
 /* Estilo de la "manija" al pasar el mouse por encima */
 ::-webkit-scrollbar-thumb:hover {
     background: #3d85c6; /* Color al pasar el mouse por encima */
+}
+
+.book {
+    transform: rotate(-90deg) translateY(-50%); /* Gira el libro y luego centra verticalmente */
+    transform-origin: top right; /* Cambia el origen de la transformación a la esquina superior derecha */
+    background-color: #f8f8f8; /* Color de fondo del libro */
+    border: 1px solid #ccc; /* Borde del libro */
+    padding: 5px 10px; /* Espaciado interno para el texto */
+    width: 150px; /* Ancho del libro */
+    text-align: center; /* Centrar texto */
+    position: absolute; /* Posición absoluta para colocarlo correctamente en el estante */
+    top: 50%; /* Comienza en el centro verticalmente */
+    margin-top: -75px; /* Ajusta esto a la mitad de la altura del libro para centrar */
+    /* No necesitas margin-left ya que estás alineando a la derecha */
+}
+
+.book-text {
+    transform: rotate(90deg); /* Contrarresta la rotación del libro para que el texto quede vertical */
+    transform-origin: center center; /* El centro del texto es el origen de la transformación */
+    text-align: center; /* Centra el texto */
+    width: 150px; /* Ancho para acomodar el texto verticalmente */
+    margin-left: -75px; /* Ajuste para compensar la anchura del texto después de la rotación */
+}
+
+/* Estilos específicos cuando solo hay un libro en la estantería */
+.book.only-book {
+    transform: rotate(-90deg) translateY(-50%); /* Gira el libro y luego centra verticalmente */
+    transform-origin: top right; /* Cambia el origen de la transformación a la esquina superior derecha */
+    background-color: #f8f8f8; /* Color de fondo del libro */
+    border: 1px solid #ccc; /* Borde del libro */
+    padding: 5px 10px; /* Espaciado interno para el texto */
+    width: 150px; /* Ancho del libro */
+    text-align: center; /* Centrar texto */
+    position: absolute; /* Posición absoluta para colocarlo correctamente en el estante */
+    top: 50%; /* Comienza en el centro verticalmente */
+    margin-top: -75px; /* Ajusta esto a la mitad de la altura del libro para centrar */
+    /* No necesitas margin-left ya que estás alineando a la derecha */
 }
