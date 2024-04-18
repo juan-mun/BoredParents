@@ -1,0 +1,17 @@
+body {
+    background-color: #f0f0f0;
+    color: #333;
+}
+.navbar, .table, .btn-primary {
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+/* Se añade un pequeño estilo al botón para que no tenga el color azul por defecto de Bootstrap */
+.btn-primary {
+    color: #333;
+    background-color: #e7e7e7;
+}
+/* Ajuste del margen para el botón 'Crear Actividad' */
+.create-activity-btn {
+    margin-bottom: 1rem;
+}
