@@ -1,166 +1,60 @@
 package com.BoredParents.BoredParents.Entities;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Usuario {
+@Table(name= "usuario", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
+public class Usuario implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @NotEmpty
-    private String nombre;
-
-    @NotEmpty
-    private String apellido;
-
-    @Email
-    @NotEmpty
-    private String email;
-
-    @NotEmpty
-    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
-    private String contraseña;
-
-    @NotNull
-    private Date fechaNacimiento;
-
-    @NotEmpty
-    private String rol;
-
-    private String avatar;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Nino> ninos;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<UsuarioConsejo> usuarioConsejos;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Repositorio> repositorios;
-
-    @CreationTimestamp
-    @Column(updatable = false)
-    private Date createdAt;
-
-    @UpdateTimestamp
-    private Date updatedAt;
-
-    // Constructor vacío
-    public Usuario() {
+    int id;
+    String nombre;
+    String apellido;
+    String email;
+    String password;
+    @Basic
+    @Column(nullable = false)
+    String username;
+    @Temporal(TemporalType.DATE)
+    Date fecha_nacimiento;
+    String direccion;
+    @Enumerated(EnumType.STRING) 
+    Role role;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+       return List.of(new SimpleGrantedAuthority((role.name())));
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
-    // Getters y setters para todos los campos
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
-    }
-
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public List<Nino> getNiños() {
-        return ninos;
-    }
-
-    public void setNiños(List<Nino> ninos) {
-        this.ninos = ninos;
-    }
-
-    public List<UsuarioConsejo> getUsuarioConsejos() {
-        return usuarioConsejos;
-    }
-
-    public void setUsuarioConsejos(List<UsuarioConsejo> usuarioConsejos) {
-        this.usuarioConsejos = usuarioConsejos;
-    }
-
-    public List<Repositorio> getRepositorios() {
-        return repositorios;
-    }
-
-    public void setRepositorios(List<Repositorio> repositorios) {
-        this.repositorios = repositorios;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }
