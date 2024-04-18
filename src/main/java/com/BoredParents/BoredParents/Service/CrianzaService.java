@@ -10,6 +10,8 @@ import java.util.List;
 @Service
 public class CrianzaService {
 
+
+    @Autowired
     private final resourcesRepository resourcesRepository;
 
     @Autowired
@@ -18,6 +20,6 @@ public class CrianzaService {
     }
 
     public List<Crianza> getAllResources() {
-        return resourcesRepository.findAll();
+        return resourcesRepository.getAllResources();
     }
 }
