@@ -14,15 +14,15 @@ body {
 .shelf {
     display: flex;
     flex-wrap: nowrap; 
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     background-color: #afcde7; /* color de los estantes */
     border: 3px solid #3d85c6; /* bordes de los estantes como en la imagen */
-    padding: 2rem; /* espaciado interior */
-    margin-bottom: 1rem; /* espaciado entre estantes */
+    padding: 0 20px; /* espaciado interior */
+    margin-bottom: 20px; /* espaciado entre estantes */
     border-radius: 1rem; /* esquinas redondeadas para los estantes */
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); /* sombra interior para los estantes */
-    height: 210px; /* altura de los estantes */
+    height: 200px; /* altura de los estantes */
     position: relative; /* para posicionar el título */
 }
 
@@ -121,38 +121,37 @@ h1 {
 }
 
 .book {
-    transform: rotate(-90deg) translateY(-50%); /* Gira el libro y luego centra verticalmente */
-    transform-origin: top right; /* Cambia el origen de la transformación a la esquina superior derecha */
-    background-color: #f8f8f8; /* Color de fondo del libro */
-    border: 1px solid #ccc; /* Borde del libro */
-    padding: 5px 10px; /* Espaciado interno para el texto */
-    width: 150px; /* Ancho del libro */
-    text-align: center; /* Centrar texto */
-    position: absolute; /* Posición absoluta para colocarlo correctamente en el estante */
-    top: 50%; /* Comienza en el centro verticalmente */
-    margin-top: -75px; /* Ajusta esto a la mitad de la altura del libro para centrar */
-    /* No necesitas margin-left ya que estás alineando a la derecha */
+    width: 100px; /* Ancho del libro, ajusta según tus necesidades */
+    height: 150px; /* Altura del libro, ajusta según tus necesidades */
+    background-color: #f8f8f8; /* Color de fondo genérico del libro */
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Sombra suave para dar profundidad */
+    margin: 0 15px; /* Espacio horizontal entre los libros */
+    border-radius: 5px; /* Esquinas redondeadas del libro */
+    display: flex; /* Flex para alinear el título del libro */
+    align-items: center; /* Alinea el texto del libro verticalmente */
+    justify-content: center; /* Alinea el texto del libro horizontalmente */
+    flex-direction: column; /* Organiza el contenido del libro en columna */
+    overflow: hidden; /* Oculta los contenidos que se salen del contenedor */
+    position: relative; /* Para posicionar elementos absolutamente dentro del libro */
+}
+
+.book::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid #ddd; /* Borde para simular la portada del libro */
+    background: linear-gradient(135deg, #cfd9df 0%, #e2ebf0 100%); /* Gradiente de ejemplo para la portada */
+    border-radius: 4px;
 }
 
 .book-text {
-    transform: rotate(90deg); /* Contrarresta la rotación del libro para que el texto quede vertical */
-    transform-origin: center center; /* El centro del texto es el origen de la transformación */
-    text-align: center; /* Centra el texto */
-    width: 150px; /* Ancho para acomodar el texto verticalmente */
-    margin-left: -75px; /* Ajuste para compensar la anchura del texto después de la rotación */
-}
-
-/* Estilos específicos cuando solo hay un libro en la estantería */
-.book.only-book {
-    transform: rotate(-90deg) translateY(-50%); /* Gira el libro y luego centra verticalmente */
-    transform-origin: top right; /* Cambia el origen de la transformación a la esquina superior derecha */
-    background-color: #f8f8f8; /* Color de fondo del libro */
-    border: 1px solid #ccc; /* Borde del libro */
-    padding: 5px 10px; /* Espaciado interno para el texto */
-    width: 150px; /* Ancho del libro */
-    text-align: center; /* Centrar texto */
-    position: absolute; /* Posición absoluta para colocarlo correctamente en el estante */
-    top: 50%; /* Comienza en el centro verticalmente */
-    margin-top: -75px; /* Ajusta esto a la mitad de la altura del libro para centrar */
-    /* No necesitas margin-left ya que estás alineando a la derecha */
+    z-index: 10; /* Asegúrate de que el texto se superponga al fondo */
+    width: 90%; /* El texto puede tomar hasta el 90% del ancho del libro */
+    margin: 0; /* Restablece los márgenes del texto */
+    text-align: center; /* Centra el texto horizontalmente */
+    font-size: 12px; /* Ajusta esto según la longitud del título para evitar desbordamientos */
+    word-wrap: break-word; /* Permite que el texto se ajuste y rompa en líneas */
 }

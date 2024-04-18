@@ -1,6 +1,9 @@
 $(document).ready(function() {
     cargarActividades();
+    cargarLibrosEnEstantes();
 });
+
+const limiteLibrosPorEstante = 5;
 
 function anadirAsignacion(idActividad, nombreActividad) {
   const postData = {
@@ -15,10 +18,13 @@ function anadirAsignacion(idActividad, nombreActividad) {
     data: JSON.stringify(postData),
     success: function(response) {
       $(`#actividad-${idActividad}`).hide();
-      const estante = $('.bookshelf .shelf').first();
+
+      // Encuentra la última estantería con espacio o crea una nueva si es necesario
+      let estante = encontrarOCrearEstante();
+
       const libro = $(`
-        <div class="book" id="book-${idActividad}">
-            <div class="book-text">${nombreActividad}</div>
+        <div class="book" id="book-${idActividad}" style="background-color: ${obtenerColorAleatorio()}">
+          <div class="book-text">${nombreActividad}</div>
         </div>
       `);
       estante.append(libro);
@@ -27,15 +33,72 @@ function anadirAsignacion(idActividad, nombreActividad) {
       actualizarEstiloDelLibro(estante);
     },
     error: function(xhr, status, error) {
-      console.error('error creando asignacion: ', error, xhr, status);
+      console.error('Error creando asignacion: ', error, xhr, status);
     }
   });
+}
+
+function cargarLibrosEnEstantes() {
+  $.ajax({
+    url: 'asignaciones/getAsignaciones',
+    type: 'GET',
+    dataType: 'json',
+    success: function(asignaciones) {
+      console.log(asignaciones); // Agregamos esto para depurar
+      asignaciones.forEach(function(asignacion) {
+        mostrarLibro(asignacion.actividad.id_actividad, asignacion.actividad.nombre);
+      });
+      $(`#actividad-${idActividad}`).hide();
+    },
+    error: function(xhr, status, error) {
+      console.error('Error al recuperar asignaciones:', error);
+    }
+  });
+}
+
+function mostrarLibro(idActividad, nombreActividad) {
+  let estante = encontrarOCrearEstante();
+  const libro = $(`
+    <div class="book" id="book-${idActividad}" style="background-color: ${obtenerColorAleatorio()}">
+      <div class="book-text">${nombreActividad}</div>
+    </div>
+  `);
+  console.log(libro); // Para depuración
+  estante.append(libro);
+  actualizarEstiloDelLibro(estante);
+}
+
+function obtenerColorAleatorio() {
+  // Array de colores para las portadas
+  const colores = ['#FBE7C6', '#BFD8BD', '#A2C3A4', '#F7A399', '#C7B9E2'];
+  // Retorna un color al azar de la lista
+  return colores[Math.floor(Math.random() * colores.length)];
+}
+
+// Encuentra la última estantería con espacio o crea una nueva si es necesario
+function encontrarOCrearEstante() {
+  const estantes = $('.bookshelf .shelf');
+  let estante;
+
+  if(estantes.length === 0 || estanteLleno($(estantes[estantes.length - 1]))) {
+    estante = $('<div class="shelf"></div>');
+    $('.bookshelf').append(estante);
+  } else {
+    estante = $(estantes[estantes.length - 1]);
+  }
+
+  return estante;
+}
+
+// Comprueba si el estante está lleno
+function estanteLleno(estante) {
+  return estante.children('.book').length >= limiteLibrosPorEstante;
 }
 
 function actualizarEstiloDelLibro(estante) {
   const libros = estante.children('.book');
   if(libros.length === 1) {
-      $(libros[0]).addClass('only-book');
+      libros.addClass('only-book');
   } else {
       libros.removeClass('only-book');
   }
