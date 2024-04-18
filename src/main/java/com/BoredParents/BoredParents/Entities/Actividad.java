@@ -14,6 +14,7 @@ public class Actividad {
     private String Descripcion;
     private String Categoria;
     private String Duracion;
+    private String url;
 
     public Long getId_actividad() {
         return id_actividad;
@@ -54,4 +55,14 @@ public class Actividad {
     public void setDuracion(String duracion) {
         Duracion = duracion;
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    
 }

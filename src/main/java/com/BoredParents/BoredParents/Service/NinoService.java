@@ -18,4 +18,12 @@ public class NinoService {
         return ninoRepository.getAllNinos();
     }
 
+    public Nino saveNino(Nino nino){
+        return ninoRepository.saveNino(nino);
+    }
+
+    public void deleteNino(Long id){
+        ninoRepository.deleteNino(id);
+    }
+
 }

@@ -29,7 +29,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger" id="eliminarBtn">Eliminar</button>
+                    <button type="button" class="btn btn-danger" id="eliminarBtn" onclick="eliminarPerfil()">Eliminar</button>
                 </div>
             </div>
         </div>
@@ -43,25 +43,47 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <form>
-                      <div class="mb-3">
-                          <label for="nombre" class="form-label">Nombre</label>
-                          <input type="text" class="form-control" id="nombre" name="nombre" required>
-                      </div>
-                      <div class="mb-3">
-                          <label for="apellido" class="form-label">Apellido</label>
-                          <input type="text" class="form-control" id="apellido" name="apellido" required>
-                      </div>
-                      <div class="mb-3">
-                          <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
-                          <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
-                      </div>
-                  </form>
-                    <!-- Contenido del formulario -->
+                <form id="addProfileForm">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
+                        <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="avatar" class="form-label">Selecciona un avatar</label>
+                        <div id="avatar" class="d-flex">
+                            <input type="radio" class="btn-check" name="avatar" id="avatar1" value="imagenes/Avatar1.png" checked>
+                            <label class="btn btn-outline-primary" for="avatar1"><img src="imagenes/Avatar1.png" alt="Avatar 1" class="img-thumbnail"></label>
+                    
+                            <input type="radio" class="btn-check" name="avatar" id="avatar2" value="imagenes/Avatar2.png">
+                            <label class="btn btn-outline-primary" for="avatar2"><img src="imagenes/Avatar2.png" alt="Avatar 2" class="img-thumbnail"></label>
+                    
+                            <input type="radio" class="btn-check" name="avatar" id="avatar3" value="imagenes/Avatar3.png">
+                            <label class="btn btn-outline-primary" for="avatar3"><img src="imagenes/Avatar3.png" alt="Avatar 3" class="img-thumbnail"></label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="interesesSelect" class="form-label">Intereses</label>
+                        <select class="form-select" id="interesesSelect">
+                            <option value="Arte">Arte</option>
+                            <option value="Ciencia">Ciencia</option>
+                            <option value="Deportes">Deportes</option>
+                            <!-- Más opciones de intereses aquí -->
+                        </select>
+                        <button type="button" class="btn btn-primary mt-2" id="addInteres" onclick="agregarInteres()">Añadir</button>
+                    </div>
+                    <!-- Contenedor para intereses seleccionados -->
+                    <div id="interesesList" class="mt-3 d-flex flex-wrap gap-2">
+                        <!-- Los intereses seleccionados se añadirán aquí usando JavaScript -->
+                    </div>
+                </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="guardarBtn">Guardar</button>
+                    <button type="button" class="btn btn-primary" id="guardarBtn" onclick="guardarPerfil()">Guardar</button>
                 </div>
             </div>
         </div>

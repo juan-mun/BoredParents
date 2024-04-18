@@ -16,4 +16,12 @@ public class NinoRepository {
     public List<Nino> getAllNinos(){
         return (List<Nino>) ninoCRUDRepository.findAll();
     }
+
+    public Nino saveNino(Nino nino){
+        return ninoCRUDRepository.save(nino);
+    }
+
+    public void deleteNino(Long id){
+        ninoCRUDRepository.deleteById(id);
+    } 
 }

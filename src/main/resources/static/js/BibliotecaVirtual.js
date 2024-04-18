@@ -1,6 +1,8 @@
 $(document).ready(function() {
+    const idNino = localStorage.getItem('idNinoActual');
+    console.log(idNino);
     cargarActividades();
-    cargarLibrosEnEstantes();
+    //cargarLibrosEnEstantes();
 });
 
 const limiteLibrosPorEstante = 5;
@@ -123,6 +125,13 @@ function cargarActividades() {
           `);
           listaActividadesContainer.append(actividadElement);
         });
+
+        $('#searchInput').on('keyup', function() {
+          var value = $(this).val().toLowerCase();
+          $('.actividad').filter(function() {
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+          });
+      });
       },
       error: function(xhr, status, error) {
         console.error('Error fetching actividades:', error);

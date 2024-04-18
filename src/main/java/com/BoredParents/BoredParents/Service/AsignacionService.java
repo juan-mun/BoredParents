@@ -17,7 +17,7 @@ public class AsignacionService {
     public List<Asignacion> getAllAsignaciones(){
         return asignacionRepository.getAllAsignaciones();
     }
-
+    
     public Asignacion addAsignacion(Asignacion asignacion){
         return asignacionRepository.addAsignacion(asignacion);
     }

@@ -20,7 +20,7 @@ public class Nino {
     private String nombre;
     private LocalDate fechaNacimiento;
     private String avatarUrl;
-    private String intereses;
+    private List<String> intereses;
 
 
     @OneToMany(mappedBy = "nino")
@@ -67,17 +67,6 @@ public class Nino {
         this.avatarUrl = avatarUrl;
     }
 
-
-    public String getIntereses() {
-        return intereses;
-    }
-
-
-    public void setIntereses(String intereses) {
-        this.intereses = intereses;
-    }
-
-
     public List<Asignacion> getAsignaciones() {
         return Asignaciones;
     }
@@ -85,6 +74,16 @@ public class Nino {
 
     public void setAsignaciones(List<Asignacion> asignaciones) {
         Asignaciones = asignaciones;
+    }
+
+
+    public List<String> getIntereses() {
+        return intereses;
+    }
+
+
+    public void setIntereses(List<String> intereses) {
+        this.intereses = intereses;
     }
 
     
