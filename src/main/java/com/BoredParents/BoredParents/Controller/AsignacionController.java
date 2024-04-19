@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.BoredParents.BoredParents.Entities.Actividad;
 import com.BoredParents.BoredParents.Entities.Asignacion;
 import com.BoredParents.BoredParents.Service.AsignacionService;
 
@@ -29,6 +30,11 @@ public class AsignacionController {
     @PostMapping("/addAsignacion")
     public Asignacion addAsignacion(@RequestBody Asignacion asignacion){
         return asignacionService.addAsignacion(asignacion);
+    }
+
+    @GetMapping("/actividadesPorNino/{ninoId}")
+    public List<Actividad> getActividadesByNinoId(@PathVariable Long ninoId) {
+        return asignacionService.getActividadesByNinoId(ninoId);
     }
 
     @DeleteMapping("/{id}")

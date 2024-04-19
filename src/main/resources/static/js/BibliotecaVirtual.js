@@ -2,7 +2,7 @@ $(document).ready(function() {
     const idNino = localStorage.getItem('idNinoActual');
     console.log(idNino);
     cargarActividades();
-    //cargarLibrosEnEstantes();
+    cargarLibrosEnEstantes(1);
 });
 
 const limiteLibrosPorEstante = 5;
@@ -40,32 +40,37 @@ function anadirAsignacion(idActividad, nombreActividad) {
   });
 }
 
-function cargarLibrosEnEstantes() {
+function cargarLibrosEnEstantes(idNino) {
   $.ajax({
-    url: 'asignaciones/getAsignaciones',
+    url: 'asignaciones/actividadesPorNino/' + idNino,
     type: 'GET',
     dataType: 'json',
-    success: function(asignaciones) {
-      console.log(asignaciones); // Agregamos esto para depurar
-      asignaciones.forEach(function(asignacion) {
-        mostrarLibro(asignacion.actividad.id_actividad, asignacion.actividad.nombre);
+    success: function(actividades) {  // Cambio de 'asignaciones' a 'actividades'
+      console.log(actividades); // Agregamos esto para depurar
+      actividades.forEach(function(actividad) {  // Iterar sobre el arreglo de actividades
+        mostrarLibro(actividad.id_actividad, actividad.nombre, actividad.url);  // Mostrar cada libro basado en la actividad
       });
-      $(`#actividad-${idActividad}`).hide();
+      // El uso de idActividad en $(`#actividad-${idActividad}`).hide(); no es necesario aquí
     },
     error: function(xhr, status, error) {
-      console.error('Error al recuperar asignaciones:', error);
+      console.error('Error al recuperar actividades:', error);
     }
   });
 }
 
-function mostrarLibro(idActividad, nombreActividad) {
+function mostrarLibro(idActividad, nombreActividad, urlActividad) {
   let estante = encontrarOCrearEstante();
   const libro = $(`
     <div class="book" id="book-${idActividad}" style="background-color: ${obtenerColorAleatorio()}">
       <div class="book-text">${nombreActividad}</div>
     </div>
   `);
-  console.log(libro); // Para depuración
+  libro.click(function() {
+    // Inserta el contenido del iframe en el modal
+    $('#contenidoActividad').html(urlActividad);
+    // Abre el modal
+    $('#actividadModal').modal('show');
+  });
   estante.append(libro);
   actualizarEstiloDelLibro(estante);
 }
