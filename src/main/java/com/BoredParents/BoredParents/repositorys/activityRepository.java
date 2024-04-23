@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.BoredParents.BoredParents.Entities.Actividad;
 
 @Repository
-public class ActivityRepository{
+public class activityRepository{
     
     @Autowired
     private ActivityCRUDRepository activityCRUDRepository;

@@ -2,18 +2,19 @@ $(document).ready(function() {
     const idNino = localStorage.getItem('idNinoActual');
     console.log(idNino);
     cargarActividades();
-<<<<<<< HEAD
-    cargarLibrosEnEstantes(1);
-=======
-    //cargarLibrosEnEstantes();
->>>>>>> 165bd55d730f8671c2bddbac1d29234446c5bb0f
+    cargarLibrosEnEstantes(idNino);
+});
+
+$('#deleteAssignmentModal').on('show.bs.modal', function (e) {
+  cargarAsignacionesDelNino(); 
 });
 
 const limiteLibrosPorEstante = 5;
 
 function anadirAsignacion(idActividad, nombreActividad) {
+  const idNino2 = localStorage.getItem('idNinoActual');
   const postData = {
-    nino: {id_nino: 1},
+    nino: {id_nino: idNino2},
     actividad: {id_actividad: idActividad}
   };
 
@@ -44,7 +45,6 @@ function anadirAsignacion(idActividad, nombreActividad) {
   });
 }
 
-<<<<<<< HEAD
 function cargarLibrosEnEstantes(idNino) {
   $.ajax({
     url: 'asignaciones/actividadesPorNino/' + idNino,
@@ -59,47 +59,23 @@ function cargarLibrosEnEstantes(idNino) {
     },
     error: function(xhr, status, error) {
       console.error('Error al recuperar actividades:', error);
-=======
-function cargarLibrosEnEstantes() {
-  $.ajax({
-    url: 'asignaciones/getAsignaciones',
-    type: 'GET',
-    dataType: 'json',
-    success: function(asignaciones) {
-      console.log(asignaciones); // Agregamos esto para depurar
-      asignaciones.forEach(function(asignacion) {
-        mostrarLibro(asignacion.actividad.id_actividad, asignacion.actividad.nombre);
-      });
-      $(`#actividad-${idActividad}`).hide();
-    },
-    error: function(xhr, status, error) {
-      console.error('Error al recuperar asignaciones:', error);
->>>>>>> 165bd55d730f8671c2bddbac1d29234446c5bb0f
     }
   });
 }
 
-<<<<<<< HEAD
 function mostrarLibro(idActividad, nombreActividad, urlActividad) {
-=======
-function mostrarLibro(idActividad, nombreActividad) {
->>>>>>> 165bd55d730f8671c2bddbac1d29234446c5bb0f
   let estante = encontrarOCrearEstante();
   const libro = $(`
     <div class="book" id="book-${idActividad}" style="background-color: ${obtenerColorAleatorio()}">
       <div class="book-text">${nombreActividad}</div>
     </div>
   `);
-<<<<<<< HEAD
   libro.click(function() {
     // Inserta el contenido del iframe en el modal
     $('#contenidoActividad').html(urlActividad);
     // Abre el modal
     $('#actividadModal').modal('show');
   });
-=======
-  console.log(libro); // Para depuración
->>>>>>> 165bd55d730f8671c2bddbac1d29234446c5bb0f
   estante.append(libro);
   actualizarEstiloDelLibro(estante);
 }
@@ -140,6 +116,25 @@ function actualizarEstiloDelLibro(estante) {
   }
 }
 
+function cargarAsignacionesDelNino() {
+  let idNino = localStorage.getItem('idNinoActual');  // Recupera el ID del niño actual desde el almacenamiento local
+  $.ajax({
+      url: `/asignaciones/actividadesPorNino/${idNino}`, // Llamada AJAX al servidor para obtener las asignaciones
+      type: 'GET',
+      success: function(asignaciones) {
+          const select = $('#assignmentSelect');
+          select.empty();  // Limpia las opciones anteriores
+          asignaciones.forEach(asignacion => {
+              // Agrega cada asignación como opción en el select
+              select.append(new Option(asignacion.actividad.nombre, asignacion.id_asignacion));
+          });
+      },
+      error: function(error) {
+          console.error('Error al cargar las asignaciones:', error);
+      }
+  });
+}
+
 function cargarActividades() {
     $.ajax({
       url: 'actividades/getActivity',
@@ -172,5 +167,22 @@ function cargarActividades() {
       }
     });
 }
+
+function eliminarAsignacionSeleccionada() {
+  let idAsignacion = $('#assignmentSelect').val();
+  $.ajax({
+      url: `/asignaciones/${idAsignacion}`,
+      type: 'DELETE',
+      success: function(response) {
+          alert('Asignación eliminada con éxito');
+          $('#deleteAssignmentModal').modal('hide');
+          cargarLibrosEnEstantes(idNino);
+      },
+      error: function(error) {
+          console.error('Error al eliminar la asignación:', error);
+      }
+  });
+}
+
   
   

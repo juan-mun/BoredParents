@@ -1,6 +1,7 @@
 let currentPage = 0;
 let croppieInstance = null;
-console.log("HOLA MUNDO");
+const idNino = localStorage.getItem('idNinoActual');
+console.log(idNino);
 
 function confirmCrop() {
     // Obtener el resultado de Croppie

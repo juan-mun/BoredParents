@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.BoredParents.BoredParents.Entities.Actividad;
-import com.BoredParents.BoredParents.repositorys.ActivityRepository;
+import com.BoredParents.BoredParents.repositorys.activityRepository;
 
 @Service
 public class ActividadService {
     
     @Autowired
-    private ActivityRepository activityRepository;
+    private activityRepository activityRepository;
 
     public List<Actividad> getAllActividades (){
         return activityRepository.getAllActividades();

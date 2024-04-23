@@ -107,13 +107,13 @@ function guardarPerfil() {
         data: JSON.stringify(nino),
         success: function(data) {
             // Agregar el nuevo perfil a la vista
-            var perfilHTML = '<div class="col-md-4 clickable-profile" data-href="rutina.html">' +
+            var perfilHTML = '<div class="col-md-4 clickable-profile" onclick="seleccionarPerfil(' + nino.id_nino + ')">' +
                 '<div class="profile-container">' +
                 '<div class="profile-circle">' +
-                '<img src="' + data.avatarUrl + '" alt="Profile" class="profile-image">' +
+                '<img src="' + nino.avatarUrl + '" alt="Profile" class="profile-image">' +
                 '</div>' +
                 '<div class="profile-info">' +
-                '<h5 class="profile-name">' + data.nombre + '</h5>' +
+                '<h5 class="profile-name">' + nino.nombre + '</h5>' +
                 '</div>' +
                 '</div>' +
                 '</div>';
