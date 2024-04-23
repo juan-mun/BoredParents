@@ -13,6 +13,7 @@ const limiteLibrosPorEstante = 5;
 
 function anadirAsignacion(idActividad, nombreActividad) {
   const idNino2 = localStorage.getItem('idNinoActual');
+  console.log(idNino2)
   const postData = {
     nino: {id_nino: idNino2},
     actividad: {id_actividad: idActividad}
