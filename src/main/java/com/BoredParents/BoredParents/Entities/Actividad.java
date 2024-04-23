@@ -1,9 +1,14 @@
 package com.BoredParents.BoredParents.Entities;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Actividad {
@@ -11,9 +16,13 @@ public class Actividad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_actividad;
     private String nombre;
-    private String Descripcion;
-    private String Categoria;
-    private String Duracion;
+    private String descripcion;
+    private String categoria;
+    private String duracion;
+
+    @OneToMany(mappedBy = "actividad")
+    @JsonIgnoreProperties("actividad")
+    private List<RegistroActividad> registroActividad;
 
     public Long getId_actividad() {
         return id_actividad;
@@ -32,26 +41,26 @@ public class Actividad {
     }
 
     public String getDescripcion() {
-        return Descripcion;
+        return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
-        Descripcion = descripcion;
+        this.descripcion = descripcion;
     }
 
     public String getCategoria() {
-        return Categoria;
+        return categoria;
     }
 
     public void setCategoria(String categoria) {
-        Categoria = categoria;
+        this.categoria = categoria;
     }
 
     public String getDuracion() {
-        return Duracion;
+        return duracion;
     }
 
     public void setDuracion(String duracion) {
-        Duracion = duracion;
+        this.duracion = duracion;
     }
 }

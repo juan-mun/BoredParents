@@ -1,0 +1,158 @@
+body {
+    background-color: #e0f2ff; /* fondo de pantalla */
+}
+
+.bookshelf {
+    background-color: #6fa8dc; /* color principal del estante */
+    padding: 1rem;
+    border-radius: 1rem; /* esquinas redondeadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* sombra para dar profundidad */
+    margin: 1rem auto; /* centrar en la pantalla */
+    max-width: 1200px; /* ancho máximo del estante */
+}
+
+.shelf {
+    display: flex;
+    flex-wrap: nowrap; 
+    justify-content: center;
+    align-items: center;
+    background-color: #afcde7; /* color de los estantes */
+    border: 3px solid #3d85c6; /* bordes de los estantes como en la imagen */
+    padding: 2rem; /* espaciado interior */
+    margin-bottom: 1rem; /* espaciado entre estantes */
+    border-radius: 1rem; /* esquinas redondeadas para los estantes */
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); /* sombra interior para los estantes */
+    height: 210px; /* altura de los estantes */
+    position: relative; /* para posicionar el título */
+}
+
+.shelf:only-child {
+    justify-content: flex-start; /* Si solo hay un libro, alinea este a la izquierda */
+}
+
+.shelf:last-child {
+    margin-bottom: 0; /* último estante sin margen inferior */
+}
+
+/* Estilo adicional para centrar el título en la primera estantería */
+.shelf:first-child .shelf-title {
+    font-size: 2rem; /* tamaño más grande para el título principal */
+}
+
+h1 {
+    font-family: 'Arial', sans-serif; /* Fuente más moderna y limpia */
+    text-align: center; /* Asegurarse de que el título esté centrado */
+    color: #3d85c6; /* Un color que combine con el tema de tu aplicación */
+    margin-bottom: 0.1rem; /* Espacio debajo del título */
+    padding: 0.5rem 1rem; /* Espaciado alrededor del texto */
+    background: rgba(175, 205, 227, 0.3); /* Un fondo suave semitransparente */
+    border-radius: 20px; /* Bordes redondeados */
+    display: inline-block; /* Hace que el fondo se ajuste al contenido del texto */
+    box-shadow: 0px 8px 16px 0px rgba(61, 133, 198, 0.5); /* Sombra para profundidad */
+    border: 2px solid #3d85c6; /* Borde sólido que combina con el color del texto */
+}
+
+.container-h1 {
+    margin-top: 1rem;
+    display: flex; /* Usar flexbox para alinear elementos hijos */
+    flex-direction: column; /* Alinear los elementos hijos verticalmente */
+    align-items: center; /* Centrar los elementos hijos horizontalmente */
+}
+
+.container {
+    margin-top: 1.5rem;
+}
+
+.lista-actividades {
+    /* Similar al .bookshelf para mantener la consistencia */
+    background-color: #6fa8dc;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    margin: 1rem auto;
+    max-width: 1200px;
+}
+
+.lista-actividades .actividad {
+    /* Estilo de cada actividad para que se vea como un estante individual */
+    position: relative;
+    background-color: #afcde7;
+    border: 2px solid #3d85c6;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 0.5rem;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.lista-actividades .actividad .btn {
+    position: absolute; /* Posiciona el botón de forma absoluta dentro del div */
+    right: 1rem; /* Espaciado desde el borde derecho */
+    top: 50%; /* Alinea el botón en el centro verticalmente */
+    transform: translateY(-50%); /* Ajusta la posición vertical exacta */
+}
+
+.lista-actividades h2 {
+    color: #3d85c6;
+    padding: 0.5rem;
+    border-bottom: 2px solid #3d85c6; /* Separador de título */
+    margin-bottom: 1rem;
+}
+
+::-webkit-scrollbar {
+    width: 12px;  /* Ancho de la barra de desplazamiento */
+}
+
+/* Estilo del camino o riel de la barra de desplazamiento */
+::-webkit-scrollbar-track {
+    background: #e0f2ff;  /* Color del fondo del riel de desplazamiento */
+    border-radius: 10px;  /* Bordes redondeados */
+    box-shadow: inset 0 0 5px grey; /* Sombra interior ligera */
+}
+
+/* Estilo de la "manija" o parte móvil de la barra de desplazamiento */
+::-webkit-scrollbar-thumb {
+    background: #3d85c6;  /* Color de la manija de desplazamiento */
+    border-radius: 10px;  /* Bordes redondeados */
+}
+
+/* Estilo de la "manija" al pasar el mouse por encima */
+::-webkit-scrollbar-thumb:hover {
+    background: #3d85c6; /* Color al pasar el mouse por encima */
+}
+
+.book {
+    transform: rotate(-90deg) translateY(-50%); /* Gira el libro y luego centra verticalmente */
+    transform-origin: top right; /* Cambia el origen de la transformación a la esquina superior derecha */
+    background-color: #f8f8f8; /* Color de fondo del libro */
+    border: 1px solid #ccc; /* Borde del libro */
+    padding: 5px 10px; /* Espaciado interno para el texto */
+    width: 150px; /* Ancho del libro */
+    text-align: center; /* Centrar texto */
+    position: absolute; /* Posición absoluta para colocarlo correctamente en el estante */
+    top: 50%; /* Comienza en el centro verticalmente */
+    margin-top: -75px; /* Ajusta esto a la mitad de la altura del libro para centrar */
+    /* No necesitas margin-left ya que estás alineando a la derecha */
+}
+
+.book-text {
+    transform: rotate(90deg); /* Contrarresta la rotación del libro para que el texto quede vertical */
+    transform-origin: center center; /* El centro del texto es el origen de la transformación */
+    text-align: center; /* Centra el texto */
+    width: 150px; /* Ancho para acomodar el texto verticalmente */
+    margin-left: -75px; /* Ajuste para compensar la anchura del texto después de la rotación */
+}
+
+/* Estilos específicos cuando solo hay un libro en la estantería */
+.book.only-book {
+    transform: rotate(-90deg) translateY(-50%); /* Gira el libro y luego centra verticalmente */
+    transform-origin: top right; /* Cambia el origen de la transformación a la esquina superior derecha */
+    background-color: #f8f8f8; /* Color de fondo del libro */
+    border: 1px solid #ccc; /* Borde del libro */
+    padding: 5px 10px; /* Espaciado interno para el texto */
+    width: 150px; /* Ancho del libro */
+    text-align: center; /* Centrar texto */
+    position: absolute; /* Posición absoluta para colocarlo correctamente en el estante */
+    top: 50%; /* Comienza en el centro verticalmente */
+    margin-top: -75px; /* Ajusta esto a la mitad de la altura del libro para centrar */
+    /* No necesitas margin-left ya que estás alineando a la derecha */
+}
