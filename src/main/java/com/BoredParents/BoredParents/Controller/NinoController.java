@@ -32,7 +32,10 @@ public class NinoController {
         return ninoService.saveNino(nino);
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 165bd55d730f8671c2bddbac1d29234446c5bb0f
     @PutMapping("/updateNino")
     public Nino updateNino(@RequestBody Nino nino){
         return ninoService.saveNino(nino);

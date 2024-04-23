@@ -10,6 +10,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+<<<<<<< HEAD
+=======
+import jakarta.persistence.OneToOne;
+>>>>>>> 165bd55d730f8671c2bddbac1d29234446c5bb0f
 
 @Entity
 public class Nino {
@@ -27,6 +31,11 @@ public class Nino {
     @JsonIgnoreProperties("nino")
     private List<Asignacion> Asignaciones;
 
+<<<<<<< HEAD
+=======
+    @OneToOne(mappedBy = "nino")
+    private lifeBook lifeBook;
+>>>>>>> 165bd55d730f8671c2bddbac1d29234446c5bb0f
 
     public Long getId_nino() {
         return id_nino;
@@ -86,6 +95,19 @@ public class Nino {
         this.intereses = intereses;
     }
 
+<<<<<<< HEAD
+=======
+
+    public lifeBook getLifeBook() {
+        return lifeBook;
+    }
+
+
+    public void setLifeBook(lifeBook lifeBook) {
+        this.lifeBook = lifeBook;
+    }
+
+>>>>>>> 165bd55d730f8671c2bddbac1d29234446c5bb0f
     
 
 }
