@@ -4,11 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-<<<<<<< HEAD
-=======
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
->>>>>>> d08e6f8afbd407847242235ed18e7a810ea3b993
 
 @Entity
 public class Actividad {
