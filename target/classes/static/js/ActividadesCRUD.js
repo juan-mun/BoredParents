@@ -113,7 +113,7 @@ function updateActividad() {
     };
 
     $.ajax({
-        url: '/actividades/updateActivity',
+        url: '/actividades/updateActivity/' + id,
         type: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(actividadData),
@@ -123,14 +123,7 @@ function updateActividad() {
             getActividades();
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus, errorThrown, jqXHR);
+            console.log(textStatus, errorThrown);
         }
-    });
-}
-
-function buscar() {
-    var value = $("#searchInput").val().toLowerCase();
-    $("table tbody tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
     });
 }
