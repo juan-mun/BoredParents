@@ -4,17 +4,40 @@ const idNino = localStorage.getItem('idNinoActual');
 console.log(idNino);
 
 function confirmCrop() {
-    // Obtener el resultado de Croppie
-    croppieInstance.result({ type: 'canvas', size: 'viewport' }).then(function(img) {
-        const imageDisplay = document.getElementById(`imageDisplay${currentPage}`);
-        imageDisplay.innerHTML = `<img src="${img}" alt="Imagen recortada">`;
-        const uploadArea = document.getElementById(`uploadArea${currentPage}`);
-        uploadArea.style.display = 'none';
-        // Ocultar el modal
-        document.getElementById('croppieModal').style.display = 'none';
-        // Destruir la instancia de Croppie para evitar usos futuros
-        croppieInstance.destroy();
-        croppieInstance = null;
+    croppieInstance.result({ type: 'canvas', size: 'viewport' }).then(function(canvas) {
+        canvas.toBlob(function(blob) {
+            // Ahora tienes la imagen como un Blob
+            var reader = new FileReader();
+            reader.readAsArrayBuffer(blob);
+            reader.onloadend = function() {
+                var byteArr = new Uint8Array(reader.result);
+                // Ahora byteArr es tu arreglo de bytes
+                enviarImagenAlServidor(byteArr);
+            };
+        }, 'image/jpg');  // Asegúrate de elegir el formato de imagen adecuado
+    });
+}
+
+function enviarImagenAlServidor(byteArray) {
+    var data = {
+        content: Array.from(byteArray),  // Convertir el Uint8Array a un arreglo normal
+        contentType: 'image/jpeg',  // Asegúrate de que el contentType coincida con el formato del blob
+        title: 'Título de la imagen',
+        description: 'Descripción opcional',
+        eventDate: new Date().toISOString().slice(0, 10)  // Formato de fecha YYYY-MM-DD
+    };
+
+    $.ajax({
+        url: '/lifebook/saveMaterial',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function(response) {
+            console.log('Success:', response);
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+        }
     });
 }
 
