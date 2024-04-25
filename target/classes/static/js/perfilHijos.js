@@ -2,6 +2,14 @@ $(document).ready(function() {
     cargarPerfiles();
 });
 
+// Función para limpiar el token de localStorage
+function logout() {
+    var confirmLogout = confirm("¿Estás seguro de que deseas cerrar sesión?");
+    
+    localStorage.removeItem('token');
+    window.location.href = "/vistas/index.html"
+}
+
 function agregarInteres() {
     const interesSelect = document.getElementById('interesesSelect');
     const interes = interesSelect.value;
@@ -51,20 +59,23 @@ function eliminarPerfil() {
 }
 
 function cargarPerfiles() {
+    var token = localStorage.getItem('miToken');
     $.ajax({
-        url: '/ninos/getNinos', // Asegúrate de que esta URL coincida con tu endpoint en el backend
+        url: '/ninos/getNinos',
         type: 'GET',
+        beforeSend: function(xhr) {
+            if (token) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+            }
+        },
         success: function(data) {
-            // Vaciar la lista actual de perfiles y el select del modal eliminar
             $('#perfiles .row').empty();
-            $('#perfilSelect').empty(); // Asegúrate de vaciar el select antes de llenarlo
-
-            // Iterar sobre cada perfil recibido del backend y añadirlo a la página y al select del modal
+            $('#perfilSelect').empty();
             data.forEach(function(nino) {
                 var perfilHTML = '<div class="col-md-4 clickable-profile" onclick="seleccionarPerfil(' + nino.id_nino + ')">' +
                     '<div class="profile-container">' +
                     '<div class="profile-circle">' +
-                    '<img src="' + nino.avatarUrl + '" alt="Profile" class="profile-image">' +
+                    '<img src=" ../' + nino.avatarUrl + '" alt="Profile" class="profile-image">' +
                     '</div>' +
                     '<div class="profile-info">' +
                     '<h5 class="profile-name">' + nino.nombre + '</h5>' +
@@ -75,7 +86,7 @@ function cargarPerfiles() {
                 var optionHTML = '<option value="' + nino.id_nino + '">' + nino.nombre + '</option>';
 
                 $('#perfiles .row').append(perfilHTML);
-                $('#perfilSelect').append(optionHTML); // Agrega esta línea aquí
+                $('#perfilSelect').append(optionHTML);
             });
         },
         error: function(error) {
@@ -88,16 +99,16 @@ function cargarPerfiles() {
 function guardarPerfil() {
     const nombre = $('#nombre').val();
     const fechaNacimiento = $('#fechaNacimiento').val();
-    const avatarSeleccionado = $('input[name="avatar"]:checked').val(); // Obtiene el avatar seleccionado
+    const avatarSeleccionado = $('input[name="avatar"]:checked').val();
     const intereses = Array.from(document.querySelectorAll('#interesesList .interes-item')).map(function(item) {
-        return item.textContent.replace('Eliminar', '').trim(); // Elimina la palabra 'Eliminar' de los intereses
+        return item.textContent.replace('Eliminar', '').trim();
     });
 
     const nino = {
         nombre: nombre,
         fechaNacimiento: fechaNacimiento,
-        avatarUrl: avatarSeleccionado, // Utiliza la URL del avatar seleccionado
-        intereses: intereses // Utiliza el array de intereses seleccionados
+        avatarUrl: avatarSeleccionado,
+        intereses: intereses
     };
 
     $.ajax({
@@ -106,7 +117,6 @@ function guardarPerfil() {
         contentType: 'application/json',
         data: JSON.stringify(nino),
         success: function(data) {
-            // Agregar el nuevo perfil a la vista
             var perfilHTML = '<div class="col-md-4 clickable-profile" onclick="seleccionarPerfil(' + nino.id_nino + ')">' +
                 '<div class="profile-container">' +
                 '<div class="profile-circle">' +
@@ -119,7 +129,6 @@ function guardarPerfil() {
                 '</div>';
             $('#perfiles .row').append(perfilHTML);
 
-            // Opcional: cerrar el modal después de guardar
             $('#addProfileModal').modal('hide');
         },
         error: function(error) {

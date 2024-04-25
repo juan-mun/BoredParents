@@ -3,6 +3,7 @@ package com.BoredParents.BoredParents.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,7 +29,7 @@ public class SecurityConfig {
     {
         return http
             .csrf(csfr -> csfr.disable())
-            .authorizeHttpRequests(authRequest -> authRequest.requestMatchers("/auth/**","/controller/**", "/vistas/**", "/js/**", "/css/**", "/favicon.ico")
+            .authorizeHttpRequests(authRequest -> authRequest.requestMatchers(HttpMethod.GET).permitAll().requestMatchers(HttpMethod.POST).permitAll().requestMatchers("/auth/**","/Controller/**","/imagenes/**", "/vistas/**", "/js/**", "/css/**", "/favicon.ico")
             .permitAll()
             .anyRequest()
             .authenticated())
