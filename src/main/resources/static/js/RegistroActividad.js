@@ -106,6 +106,36 @@ function crearGraficoLineas() {
     });
 }
 
+function descargarComoCSV() {
+    const tabla = document.getElementById('actividades-table');
+    let csv = [];
+    for (let i = 0; i < tabla.rows.length; i++) {
+        let row = [], cols = tabla.rows[i].cells;
+        for (let j = 0; j < cols.length; j++) 
+            row.push('"' + cols[j].innerText + '"'); // Agregamos comillas para manejar comas en los datos
+        csv.push(row.join(',')); // Unir cada columna con coma y cada fila con nueva línea
+    }
+    csv = csv.join('\n');
+
+    // Crear un enlace para descargar el CSV
+    const hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'actividades.csv';
+    hiddenElement.click();
+}
+/*
+//Listener 
+$(document).ready(function() {
+    // Asegúrate de que solo se cargue una vez y que no haya múltiples bindings del evento.
+    $('#descargarExcel').off('click').on('click', function() {
+        descargarComoCSV();
+    });
+
+    // Llama a cargarActividades solo una vez al cargar la página.
+    cargarActividades();
+});
+*/
 
 
 $(document).ready(function() {
