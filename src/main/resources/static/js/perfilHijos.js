@@ -70,7 +70,45 @@ function cargarPerfiles() {
         },
         success: function(data) {
             $('#perfiles .row').empty();
-            $('#perfilSelect').empty();
+            $('#perfilSelect').empty();function cargarPerfiles() {
+                var token = localStorage.getItem('miToken');
+                var userId = obtenerIdUsuario(token); // Esta función decodifica el token y devuelve el ID del usuario
+            
+                $.ajax({
+                    url: '/ninos/getNinos/' + userId, // Modifica la URL para incluir el ID del usuario
+                    type: 'GET',
+                    beforeSend: function(xhr) {
+                        if (token) {
+                            xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                        }
+                    },
+                    success: function(data) {
+                        $('#perfiles .row').empty();
+                        $('#perfilSelect').empty();
+                        data.forEach(function(nino) {
+                            var perfilHTML = '<div class="col-md-4 clickable-profile" onclick="seleccionarPerfil(' + nino.id_nino + ')">' +
+                                '<div class="profile-container">' +
+                                '<div class="profile-circle">' +
+                                '<img src=" ../' + nino.avatarUrl + '" alt="Profile" class="profile-image">' +
+                                '</div>' +
+                                '<div class="profile-info">' +
+                                '<h5 class="profile-name">' + nino.nombre + '</h5>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>';
+            
+                            var optionHTML = '<option value="' + nino.id_nino + '">' + nino.nombre + '</option>';
+            
+                            $('#perfiles .row').append(perfilHTML);
+                            $('#perfilSelect').append(optionHTML);
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error al cargar perfiles:', error);
+                    }
+                });
+            }
+            
             data.forEach(function(nino) {
                 var perfilHTML = '<div class="col-md-4 clickable-profile" onclick="seleccionarPerfil(' + nino.id_nino + ')">' +
                     '<div class="profile-container">' +
