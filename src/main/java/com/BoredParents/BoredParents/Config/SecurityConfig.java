@@ -28,7 +28,7 @@ public class SecurityConfig {
     {
         return http
             .csrf(csfr -> csfr.disable())
-            .authorizeHttpRequests(authRequest -> authRequest.requestMatchers("/auth/**", "/vistas/**", "/js/**", "/css/**", "/favicon.ico")
+            .authorizeHttpRequests(authRequest -> authRequest.requestMatchers("/auth/**","/controller/**", "/vistas/**", "/js/**", "/css/**", "/favicon.ico")
             .permitAll()
             .anyRequest()
             .authenticated())

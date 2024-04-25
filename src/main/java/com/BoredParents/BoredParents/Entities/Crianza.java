@@ -1,10 +1,8 @@
 package com.BoredParents.BoredParents.Entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Entity
 public class Crianza {
     // Getters y setters para todos los campos
@@ -18,10 +16,6 @@ public class Crianza {
     @Setter
     private String categoria;
 
-    @Setter
-    @ManyToOne
-    @JoinColumn(name = "repositorio_id")
-    private Repositorio repositorio;
 
     // Constructor vacío
     public Crianza() {
