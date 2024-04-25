@@ -27,7 +27,7 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#" data-bs-toggle="modal" data-bs-target="#deleteAssignmentModal">Eliminar Actividad</a>
-              </li> 
+              </li>
             </ul>
           </div>
         </div>
@@ -65,10 +65,11 @@
           <div class="modal-content">
               <div class="modal-header">
                   <h5 class="modal-title" id="actividadModalLabel">Contenido de la Actividad</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="cerrarJuego()"></button>
               </div>
               <div class="modal-body">
                   <button id="startGameButton" class="btn btn-primary" style="display:none;">Iniciar Juego</button>
+                  <button id="estadisticasButton" class="btn btn-primary" style="display: none;" onclick="seleccionarEstadisticas()">Ver Estadisticas</button>
                   <div id="contenidoActividad" style="display:none;"></div>
               </div>
           </div>

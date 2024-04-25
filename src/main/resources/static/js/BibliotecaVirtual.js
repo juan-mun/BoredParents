@@ -1,3 +1,5 @@
+var formattedTimeStart;
+var idActividadSeleccionada;
 $(document).ready(function() {
     const idNino = localStorage.getItem('idNinoActual');
     console.log(idNino);
@@ -72,9 +74,14 @@ function mostrarLibro(idActividad, nombreActividad, urlActividad) {
     </div>
   `);
   libro.click(function() {
+      var idDelLibro = $(this).attr('id'); // Esto te dará el ID completo, por ejemplo 'book-123'
+      idActividadSeleccionada = idDelLibro.split('-')[1]; // Esto separa 'book' de '123' y toma '123'
+      
+      console.log('ID de Actividad seleccionada:', idActividad); 
       $('#startGameButton').off('click').on('click', function() {
           iniciarJuego(idActividad, urlActividad);
       }).show();
+      $('#estadisticasButton').show();
       $('#actividadModal').modal('show');
   });
   estante.append(libro);
@@ -83,22 +90,54 @@ function mostrarLibro(idActividad, nombreActividad, urlActividad) {
 
 function iniciarJuego(idActividad, urlActividad) {
   var startTime = new Date();
-  console.log("Juego iniciado a las: " + startTime);
-
+  formattedTimeStart =  startTime.getHours().toString().padStart(2, '0') + ':' + 
+                            startTime.getMinutes().toString().padStart(2, '0') + ':' + 
+                            startTime.getSeconds().toString().padStart(2, '0');
+  console.log("Juego iniciado a las: " + formattedTimeStart);
   // Prepara y muestra el iframe
   $('#contenidoActividad').html(urlActividad).show();
   $('#startGameButton').hide();  // Oculta el botón de iniciar juego
+  $('#estadisticasButton').hide(); //Oculta el botón de Estadisticas
 }
 
-$(document).ready(function() {
-  $('#actividadModal').on('hidden.bs.modal', function () {
-      var endTime = new Date();
-      console.log("Juego cerrado a las: " + endTime);
-      $('#startGameButton').hide();  // Asegurarse de ocultar el botón si se cierra el modal
-      $('#contenidoActividad').empty().hide();  // Limpia y oculta el contenedor del iframe
-  });
-});
+function seleccionarEstadisticas() {
+  localStorage.setItem('idActividadActual', idActividadSeleccionada);
+  window.location.href = 'RegistroActividad.html'; 
+}
 
+function cerrarJuego(){
+  endTime = new Date();
+  var formattedTimeEnd = endTime.getHours().toString().padStart(2, '0') + ':' + 
+                          endTime.getMinutes().toString().padStart(2, '0') + ':' + 
+                          endTime.getSeconds().toString().padStart(2, '0');
+
+  console.log("Juego cerrado a las: " + formattedTimeEnd);
+
+  const registroActividadData = {
+    tiempo_inicio: formattedTimeStart,
+    tiempo_final: formattedTimeEnd,
+    actividad: {
+        id_actividad: idActividadSeleccionada // Asegúrate de tener esta variable definida en el scope adecuado
+    }
+  };
+
+  // Realiza la petición POST para guardar los datos de registro de actividad
+  $.ajax({
+      url: '/RegistroActividadController/save',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(registroActividadData),
+      success: function(response) {
+          console.log('Registro de actividad guardado con éxito', response);
+      },
+      error: function(xhr, status, error) {
+          console.error('Error al guardar el registro de actividad: ', error);
+      }
+  });
+
+  $('#startGameButton').hide();  // Asegurarse de ocultar el botón si se cierra el modal
+  $('#contenidoActividad').empty().hide();  // Limpia y oculta el contenedor del iframe
+}
 
 function obtenerColorAleatorio() {
   // Array de colores para las portadas

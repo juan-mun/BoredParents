@@ -1,6 +1,7 @@
+const idActividad = localStorage.getItem('idActividadActual');
 function cargarActividades() {
     $.ajax({
-        url: '/RegistroActividadController/registrosPorActividades/10', 
+        url: '/RegistroActividadController/registrosPorActividades/' + idActividad, 
         type: 'get',
         dataType: 'json',
         success: function(actividades) {
