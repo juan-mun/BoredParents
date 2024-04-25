@@ -21,7 +21,7 @@ function confirmCrop() {
 function enviarImagenAlServidor(byteArray) {
     var data = {
         content: Array.from(byteArray),  // Convertir el Uint8Array a un arreglo normal
-        contentType: 'image/jpeg',  // Asegúrate de que el contentType coincida con el formato del blob
+        contentType: 'image/jpg',  // Asegúrate de que el contentType coincida con el formato del blob
         title: 'Título de la imagen',
         description: 'Descripción opcional',
         eventDate: new Date().toISOString().slice(0, 10)  // Formato de fecha YYYY-MM-DD
