@@ -2,8 +2,6 @@ package com.BoredParents.BoredParents.Entities;
 
 import java.time.LocalTime;
 
-import org.hibernate.annotations.ManyToAny;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
