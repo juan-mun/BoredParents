@@ -72,14 +72,33 @@ function mostrarLibro(idActividad, nombreActividad, urlActividad) {
     </div>
   `);
   libro.click(function() {
-    // Inserta el contenido del iframe en el modal
-    $('#contenidoActividad').html(urlActividad);
-    // Abre el modal
-    $('#actividadModal').modal('show');
+      $('#startGameButton').off('click').on('click', function() {
+          iniciarJuego(idActividad, urlActividad);
+      }).show();
+      $('#actividadModal').modal('show');
   });
   estante.append(libro);
   actualizarEstiloDelLibro(estante);
 }
+
+function iniciarJuego(idActividad, urlActividad) {
+  var startTime = new Date();
+  console.log("Juego iniciado a las: " + startTime);
+
+  // Prepara y muestra el iframe
+  $('#contenidoActividad').html(urlActividad).show();
+  $('#startGameButton').hide();  // Oculta el botón de iniciar juego
+}
+
+$(document).ready(function() {
+  $('#actividadModal').on('hidden.bs.modal', function () {
+      var endTime = new Date();
+      console.log("Juego cerrado a las: " + endTime);
+      $('#startGameButton').hide();  // Asegurarse de ocultar el botón si se cierra el modal
+      $('#contenidoActividad').empty().hide();  // Limpia y oculta el contenedor del iframe
+  });
+});
+
 
 function obtenerColorAleatorio() {
   // Array de colores para las portadas
