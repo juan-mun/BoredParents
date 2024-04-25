@@ -1,0 +1,128 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #7fd0ff; /* Un color de fondo general que complementa el tema */
+}
+
+#book {
+    width: 100vw; /* Utiliza el ancho completo de la ventana */
+    height: 100vh; /* Utiliza la altura completa de la ventana */
+    overflow: hidden;
+    position: relative;
+}
+
+.pages {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: nowrap; /* No permite que las páginas se envuelvan */
+    transition: transform 0.8s;
+}
+
+.book-page {
+    width: calc(100% - 40px); /* Resta el margen y el padding */
+    height: calc(100% - 40px); /* Resta el margen y el padding */
+    margin: 20px;
+    padding: 20px;
+    box-sizing: border-box; /* Incluye padding y border en el ancho y alto */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    flex-shrink: 0; /* Previene que la página se encoja */
+}
+
+.cover {
+    width: 100%; /* La portada usa el ancho completo */
+    height: 100%; /* La portada usa la altura completa */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #0077ff;
+    color: white;
+}
+  
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    background-color: #0077ff; /* Botones con el color temático */
+    color: white; /* Texto del botón en blanco */
+    border: none; /* Sin bordes para los botones */
+    cursor: pointer; /* Cursor en forma de mano al pasar sobre los botones */
+}
+  
+.image-container {
+    width: 650px; /* Ancho del contenedor de la imagen */
+    height: 650px; /* Altura del contenedor de la imagen */
+    margin: 20px auto; /* Añade margen automático para centrarlo horizontalmente */
+    background-color: #fff;
+    border: 2px dashed #ccc;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.upload-area {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-align: center;
+    font-size: 20px;
+    color: #999;
+}
+
+
+#imageDisplay img {
+    max-width: 100%; /* Máximo ancho del contenedor */
+    max-height: 650px; /* Máximo altura del contenedor */
+    object-fit: scale-down; /* Escala la imagen hacia abajo para ajustarla sin cortar */
+    display: block; /* Elimina cualquier margen extra */
+}
+  
+textarea {
+    width: 80%; /* El área de texto ocupa el 80% del ancho de la página */
+    height: 100px; /* Altura fija para el área de texto */
+    margin-top: 20px; /* Margen superior para separar de la imagen */
+    padding: 10px; /* Relleno interno para el área de texto */
+    font-size: 16px; /* Tamaño de fuente para la descripción */
+    border: 2px solid #8cd5ff; /* Borde sólido y sutil para el área de texto */
+    background-color: #90dfff; /* Fondo claro que combina con el tema general */
+    resize: none; /* Evita que se pueda cambiar el tamaño del área de texto */
+}
+  
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+  /* Añade estilos adicionales si necesitas */
+  
+  
+  

@@ -1,0 +1,62 @@
+/* Estilos personalizados */
+body {
+    background-color: #51ceff; /* Fondo azul claro */
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem; /* Ajusta el tamaño del texto del logo */
+    font-weight: bold; /* Texto en negrita */
+  }
+  
+  .btn-transparent {
+    background-color: transparent !important; /* Botón transparente */
+    border-color: transparent !important; /* Sin borde */
+    color: #fff; /* Texto blanco */
+    transition: all 0.3s ease; /* Transición suave */
+  }
+  
+  .btn-transparent:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important; /* Cambia el color de fondo al pasar el ratón */
+    color: #fff; /* Texto blanco */
+  }
+  
+  .hero-image {
+    width: 100%; /* Ajusta el ancho de la imagen al 100% del contenedor */
+    height: auto; /* Ajusta la altura de la imagen automáticamente */
+    transition: transform 0.3s ease; /* Transición suave */
+  }
+  
+  .hero-image:hover {
+    transform: scale(1.05); /* Escala la imagen al pasar el ratón */
+  }
+  
+  .text-bold {
+    font-weight: bold; /* Texto en negrita */
+  }
+  
+  .highlight-box {
+    background-color: #007bff; /* Azul */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Espacio interno */
+    color: #fff; /* Texto blanco */
+    font-size: 35px; /* Tamaño de fuente duplicado */
+  }
+  
+  .feature-box {
+    background-color: #00aeff; /* Sub tono de azul */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Espacio interno */
+    margin-top: 20px; /* Espacio superior */
+  }
+  
+  .feature-image {
+    display: block; /* Hace que la imagen esté centrada horizontalmente */
+    margin: 0 auto 20px; /* Centra la imagen horizontalmente y agrega espacio inferior */
+    width: 70%; /* Tamaño de la imagen */
+    height: auto; /* Altura automática */
+  }
+  
+  .feature-box h3, .feature-box p {
+    color: #fff; /* Texto blanco */
+  }
+  
