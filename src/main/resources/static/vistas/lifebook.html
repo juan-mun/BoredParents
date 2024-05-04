@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Aventuras</title>
+    <link rel="stylesheet" href="../css/lifebook.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="book">
+        <div class="pages" id="pages">
+            <!-- La portada inicial -->
+            <div class="book-page cover" id="cover">
+                <h1>Mis Aventuras</h1>
+                <button onclick="createPage()">Siguiente Página</button>
+            </div>
+        </div>
+    </div>
+    <div id="croppieModal" class="modal">
+        <div class="modal-content">
+            <div id="croppieContainer"></div>
+            <button onclick="confirmCrop()">Recortar Imagen</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+    <script src="../js/lifebook.js"></script>
+</body>
+</html>

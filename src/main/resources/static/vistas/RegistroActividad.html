@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Actividades</title>
+    <link rel="stylesheet" href="css/RegistroActividad.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <h1>Registro de Actividades</h1>
+    <table id="actividades-table">
+        <thead>
+            <tr>
+                <th>Tiempo Inicio</th>
+                <th>Tiempo Final</th>
+                <th>Duracion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Los datos se cargarán aquí mediante AJAX -->
+        </tbody>
+    </table>
+    <canvas id="grafico-barras" width="200" height="200"></canvas>
+    <canvas id="grafico-lineas" width="400" height="200"></canvas>
+    <script src="js/RegistroActividad.js"></script>
+</body>
+
+</html>
