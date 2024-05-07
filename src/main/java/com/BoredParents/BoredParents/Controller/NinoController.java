@@ -27,6 +27,11 @@ public class NinoController {
         return ninoService.getAllNinos();
     }
 
+    @GetMapping("/getNinosById/{id}")
+    public List<Nino> getNinosByNinoId(@PathVariable Long id){
+        return ninoService.getNinosByUsuarioId(id);
+    }
+
     @PostMapping("/saveNino")
     public Nino saveNino(@RequestBody Nino nino){
         return ninoService.saveNino(nino);

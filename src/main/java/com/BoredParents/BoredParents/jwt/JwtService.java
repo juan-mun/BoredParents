@@ -8,6 +8,8 @@ import java.security.Key;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.BoredParents.BoredParents.Entities.Usuario;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,17 +22,20 @@ public class JwtService {
     private static final String SECRET_KEY = "586E3272357538782F413F4428472B4B6250655368566B597033733676397924";
 
     public String getToken(UserDetails usuario) {
-        return getToken(new HashMap<>(), usuario);
+        Map<String, Object> extraClaims = new HashMap<>();
+        Usuario user = (Usuario) usuario;
+        extraClaims.put("userId", user.getId());
+        return getToken(extraClaims, (UserDetails) usuario);
     }
 
     private String getToken(Map<String,Object> extraClaims, UserDetails usuario) {
-        
+
         return Jwts
         .builder()
         .setClaims(extraClaims)
         .setSubject(usuario.getUsername())
         .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
+        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
         .signWith((Key) getKey(), SignatureAlgorithm.HS256)
         .compact();
     }

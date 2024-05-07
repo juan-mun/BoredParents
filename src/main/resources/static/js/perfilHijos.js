@@ -1,8 +1,27 @@
 $(document).ready(function() {
     cargarPerfiles();
+    console.log(localStorage.getItem('token'));
 });
 
-// Función para limpiar el token de localStorage
+function establecerFechasNacimiento() {
+    var fechaActual = new Date();
+    var fechaMinima = new Date(fechaActual.getFullYear() - 5, fechaActual.getMonth(), fechaActual.getDate());
+
+    var inputFechaNacimiento = document.getElementById('fechaNacimiento');
+    inputFechaNacimiento.max = fechaMinima.toISOString().split('T')[0];
+}
+
+function obtenerIdUsuario(token) {
+    try {
+        var decoded = jwt_decode(token);
+        console.log(decoded);
+        return parseInt(decoded.userId);  
+    } catch (error) {
+        console.error("Error al decodificar el token:", error);
+        return null;
+    }
+}
+
 function logout() {
     var confirmLogout = confirm("¿Estás seguro de que deseas cerrar sesión?");
     
@@ -59,15 +78,11 @@ function eliminarPerfil() {
 }
 
 function cargarPerfiles() {
-    var token = localStorage.getItem('miToken');
+    var token = localStorage.getItem('token');
+    var userId = obtenerIdUsuario(token);
     $.ajax({
-        url: '/ninos/getNinos',
+        url: '/ninos/getNinosById/' + userId,
         type: 'GET',
-        beforeSend: function(xhr) {
-            if (token) {
-                xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-            }
-        },
         success: function(data) {
             $('#perfiles .row').empty();
             $('#perfilSelect').empty();function cargarPerfiles() {
@@ -135,6 +150,9 @@ function cargarPerfiles() {
 
 
 function guardarPerfil() {
+    var token = localStorage.getItem('token');
+    var userId = obtenerIdUsuario(token);
+    console.log(typeof(userId));
     const nombre = $('#nombre').val();
     const fechaNacimiento = $('#fechaNacimiento').val();
     const avatarSeleccionado = $('input[name="avatar"]:checked').val();
@@ -146,7 +164,8 @@ function guardarPerfil() {
         nombre: nombre,
         fechaNacimiento: fechaNacimiento,
         avatarUrl: avatarSeleccionado,
-        intereses: intereses
+        intereses: intereses,
+        usuario: {id: userId}
     };
 
     $.ajax({
@@ -158,7 +177,7 @@ function guardarPerfil() {
             var perfilHTML = '<div class="col-md-4 clickable-profile" onclick="seleccionarPerfil(' + nino.id_nino + ')">' +
                 '<div class="profile-container">' +
                 '<div class="profile-circle">' +
-                '<img src="' + nino.avatarUrl + '" alt="Profile" class="profile-image">' +
+                '<img src="../' + nino.avatarUrl + '" alt="Profile" class="profile-image">' +
                 '</div>' +
                 '<div class="profile-info">' +
                 '<h5 class="profile-name">' + nino.nombre + '</h5>' +
@@ -169,8 +188,10 @@ function guardarPerfil() {
 
             $('#addProfileModal').modal('hide');
         },
-        error: function(error) {
-            console.error('Error:', error);
+        error: function(xhr) {
+            console.error('Error al guardar el perfil:', xhr.responseText);
+            var errorDetail = xhr.responseJSON ? xhr.responseJSON.message : xhr.responseText;
+            console.log('Error al guardar el perfil: ' + errorDetail);
         }
     });
 }

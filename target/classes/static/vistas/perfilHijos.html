@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
     <script src="../js/perfilHijos.js"></script>
 </head> 
 <body>
@@ -30,7 +31,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger" id="eliminarBtn">Eliminar</button>
                     <button type="button" class="btn btn-danger" id="eliminarBtn" onclick="eliminarPerfil()">Eliminar</button>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="fechaNacimiento" class="form-label">Fecha de nacimiento</label>
-                            <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
+                            <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required onfocus="establecerFechasNacimiento()">
                         </div>
                         <div class="mb-3">
                             <label for="avatar" class="form-label">Selecciona un avatar</label>
@@ -110,7 +110,8 @@
                     <a class="nav-link text-white" href="#" data-bs-toggle="modal" data-bs-target="#addProfileModal">Añadir Perfil</a>
                 </li>
                 <li class="nav-item">
-                    <button id="botonSalir" type="button" class="nav-link text-white" href="#" onclick=logout()>Salir</button>
+                    <a id="botonSalir" class="nav-link text-white" href="#" onclick="logout()">Salir</a>
+                    <!--<button id="botonSalir" type="button"  href="#" onclick=logout()>Salir</button>-->
                 </li>
             </ul>
         </div>
@@ -120,13 +121,5 @@
             <!-- Los perfiles se insertarán aquí -->
         </div>
     </div>
-    <!-- <div class="profile-container">
-        <div class="profile-circle">
-            <img src="css/images/usuarioIcon.png" alt="Profile" class="profile-image">
-        </div>
-        <div class="profile-info">
-            <h5 class="profile-name">Nombre</h5>
-        </div>
-    </div> -->
 </body>
 </html>
