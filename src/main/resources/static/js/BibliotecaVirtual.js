@@ -1,5 +1,6 @@
 var formattedTimeStart;
 var idActividadSeleccionada;
+const limiteLibrosPorEstante = 5;
 $(document).ready(function() {
     const idNino = localStorage.getItem('idNinoActual');
     console.log(idNino);
@@ -11,7 +12,6 @@ $('#deleteAssignmentModal').on('show.bs.modal', function (e) {
   cargarAsignacionesDelNino(); 
 });
 
-const limiteLibrosPorEstante = 5;
 
 function anadirAsignacion(idActividad, nombreActividad) {
   const idNino2 = localStorage.getItem('idNinoActual');
@@ -22,7 +22,7 @@ function anadirAsignacion(idActividad, nombreActividad) {
   };
 
   $.ajax({
-    url: 'asignaciones/addAsignacion',
+    url: '/asignaciones/addAsignacion',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify(postData),
@@ -31,7 +31,6 @@ function anadirAsignacion(idActividad, nombreActividad) {
 
       // Encuentra la última estantería con espacio o crea una nueva si es necesario
       let estante = encontrarOCrearEstante();
-
       const libro = $(`
         <div class="book" id="book-${idActividad}" style="background-color: ${obtenerColorAleatorio()}">
           <div class="book-text">${nombreActividad}</div>
@@ -50,7 +49,7 @@ function anadirAsignacion(idActividad, nombreActividad) {
 
 function cargarLibrosEnEstantes(idNino) {
   $.ajax({
-    url: 'asignaciones/actividadesPorNino/' + idNino,
+    url: '/asignaciones/actividadesPorNino/' + idNino,
     type: 'GET',
     dataType: 'json',
     success: function(actividades) {  // Cambio de 'asignaciones' a 'actividades'
@@ -98,6 +97,9 @@ function iniciarJuego(idActividad, urlActividad) {
   $('#contenidoActividad').html(urlActividad).show();
   $('#startGameButton').hide();  // Oculta el botón de iniciar juego
   $('#estadisticasButton').hide(); //Oculta el botón de Estadisticas
+  $('#guardarTiempoButton').remove(); // Remueve el botón si ya existe
+  const guardarTiempoButton = $('<button id="guardarTiempoButton" class="btn btn-success" onclick=cerrarJuego()>Guardar Tiempo y Cerrar</button>');
+  $('.modal-body').append(guardarTiempoButton); // Añade el botón al modal
 }
 
 function seleccionarEstadisticas() {
@@ -128,15 +130,19 @@ function cerrarJuego(){
       contentType: 'application/json',
       data: JSON.stringify(registroActividadData),
       success: function(response) {
-          console.log('Registro de actividad guardado con éxito', response);
+        console.log('Registro de actividad guardado con éxito', response);
+        // Vuelve a mostrar los botones de iniciar juego y estadísticas
+        $('#startGameButton').show();
+        $('#estadisticasButton').show();
+
+        // Oculta el contenido de la actividad y el botón de cerrar juego
+        $('#contenidoActividad').empty().hide();
+        $('#guardarTiempoButton').remove();
       },
       error: function(xhr, status, error) {
           console.error('Error al guardar el registro de actividad: ', error);
       }
   });
-
-  $('#startGameButton').hide();  // Asegurarse de ocultar el botón si se cierra el modal
-  $('#contenidoActividad').empty().hide();  // Limpia y oculta el contenedor del iframe
 }
 
 function obtenerColorAleatorio() {
@@ -196,7 +202,7 @@ function cargarAsignacionesDelNino() {
 
 function cargarActividades() {
     $.ajax({
-      url: 'actividades/getActivity',
+      url: '/actividades/getActivity',
       type: 'GET',
       dataType: 'json',
       success: function(actividades) {

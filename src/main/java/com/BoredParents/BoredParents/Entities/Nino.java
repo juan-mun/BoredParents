@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,12 +27,23 @@ public class Nino {
     private List<String> intereses;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "id_usuario")
+    @JsonProperty("usuario")
     private Usuario usuario;
 
     @OneToMany(mappedBy = "nino")
     @JsonIgnoreProperties("nino")
     private List<Asignacion> Asignaciones;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 
     @OneToOne(mappedBy = "nino")
     private lifeBook lifeBook;

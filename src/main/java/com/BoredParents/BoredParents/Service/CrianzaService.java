@@ -14,7 +14,6 @@ public class CrianzaService {
     @Autowired
     private final resourcesRepository resourcesRepository;
 
-    @Autowired
     public CrianzaService(resourcesRepository resourcesRepository) {
         this.resourcesRepository = resourcesRepository;
     }

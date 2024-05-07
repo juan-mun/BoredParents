@@ -1,6 +1,7 @@
 package com.BoredParents.BoredParents.Entities;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 public class Usuario implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    Long id;
     String nombre;
     String apellido;
     String email;
@@ -36,22 +37,30 @@ public class Usuario implements UserDetails{
     String direccion;
     @Enumerated(EnumType.STRING) 
     Role role;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-       return List.of(new SimpleGrantedAuthority((role.name())));
+        if (this.role == null) {
+            return Collections.emptyList(); // Retorna una lista vacía si role es null
+        }
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
     @Override
     public boolean isEnabled() {
         return true;

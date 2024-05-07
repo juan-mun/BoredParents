@@ -29,7 +29,7 @@ public class SecurityConfig {
     {
         return http
             .csrf(csfr -> csfr.disable())
-            .authorizeHttpRequests(authRequest -> authRequest.requestMatchers(HttpMethod.GET).permitAll().requestMatchers(HttpMethod.POST).permitAll().requestMatchers("/auth/**","/Controller/**","/imagenes/**", "/vistas/**", "/js/**", "/css/**", "/favicon.ico")
+            .authorizeHttpRequests(authRequest -> authRequest.requestMatchers(HttpMethod.GET).permitAll().requestMatchers(HttpMethod.POST).permitAll().requestMatchers(HttpMethod.DELETE).permitAll().requestMatchers("/auth/**","/Controller/**","/imagenes/**", "/vistas/**", "/js/**", "/css/**", "/favicon.ico")
             .permitAll()
             .anyRequest()
             .authenticated())
