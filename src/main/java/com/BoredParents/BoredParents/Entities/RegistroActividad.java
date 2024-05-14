@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class RegistroActividad {
@@ -23,6 +24,10 @@ public class RegistroActividad {
     @JoinColumn(name = "id_actividad")
     @JsonIgnoreProperties("registroActividad")
     private Actividad actividad;
+
+    @OneToOne
+    @JoinColumn(name = "id_asignacion")
+    private Asignacion asignacion;
 
     public Long getId_RegistroActividad() {
         return id_RegistroActividad;
@@ -54,6 +59,14 @@ public class RegistroActividad {
 
     public void setActividad(Actividad actividad) {
         this.actividad = actividad;
+    }
+
+    public Asignacion getAsignacion() {
+        return asignacion;
+    }
+
+    public void setAsignacion(Asignacion asignacion) {
+        this.asignacion = asignacion;
     }
 
 }

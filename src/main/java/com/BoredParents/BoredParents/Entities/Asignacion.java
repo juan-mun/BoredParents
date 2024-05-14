@@ -1,7 +1,6 @@
 package com.BoredParents.BoredParents.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +17,7 @@ public class Asignacion {
 
     @ManyToOne
     @JoinColumn(name = "id_nino")
-    @JsonIgnoreProperties("Asignaciones")
+    @JsonBackReference // Agregamos esta anotación
     private Nino nino;
 
     @ManyToOne

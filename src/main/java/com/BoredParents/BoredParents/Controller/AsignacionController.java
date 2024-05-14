@@ -24,7 +24,7 @@ public class AsignacionController {
 
     @GetMapping("/getAsignaciones")
     public List<Asignacion> getAllAsignaciones(){
-        return asignacionService.getAllAsignaciones();
+        return asignacionService.getAllAsignaciones();  
     }
 
     @PostMapping("/addAsignacion")

@@ -26,8 +26,8 @@ public class RegistroActividadService {
     public List<RegistroActividad> getRegistroActividadsById(Long id) {
         List<RegistroActividad> allRegistroActividades = registroactividadRepository.getRegistroActividads();
         return allRegistroActividades.stream()
-                .filter(registro -> registro.getActividad().getId_actividad() == id)
+                .filter(registro -> registro.getAsignacion().getId_asignacion().equals(id))
                 .collect(Collectors.toList());
-    }
+    }    
 
 }

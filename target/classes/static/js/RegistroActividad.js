@@ -1,11 +1,14 @@
-const idActividad = localStorage.getItem('idActividadActual');
+const idActividad = localStorage.getItem('idAsignacionActual');
+console.log("El id de la actividad es: " + idActividad + "y su tipo es: " + typeof(Number(idActividad)));
+
 function cargarActividades() {
     $.ajax({
         url: '/RegistroActividadController/registrosPorActividades/' + idActividad, 
-        type: 'get',
+        type: 'GET',
         dataType: 'json',
         success: function(actividades) {
             const tableBody = $('#actividades-table tbody');
+            tableBody.empty(); // Asegúrate de limpiar la tabla antes de agregar nuevas filas
             actividades.forEach(function(actividad) {
                 const duracion = calcularDuracion(actividad.tiempo_inicio, actividad.tiempo_final);
                 tableBody.append(`
@@ -16,11 +19,11 @@ function cargarActividades() {
                     </tr>
                 `);
             });
-            crearGraficoBarras();
-            crearGraficoLineas();
+            crearGraficoBarras(actividades);
+            crearGraficoLineas(actividades);
         },
         error: function(error) {
-            alert('No se pudo cargar la información de las actividades: ' + error.responseText);
+            console.log('No se pudo cargar la información de las actividades: ' + error.responseText);
         }
     });
 }
@@ -39,20 +42,14 @@ function calcularDuracion(tiempoInicio, tiempoFinal) {
     return Math.floor(diferencia); // Redondear hacia abajo para obtener el número entero de minutos
 }
 
-function crearGraficoBarras() {
-    const filas = $('#actividades-table tbody tr').length;
-    const duraciones = [];
-    $('#actividades-table tbody tr').each(function() {
-        const duracion = parseInt($(this).find('td:nth-child(3)').text()); // Obtener la duración de la tercera columna
-        duraciones.push(duracion);
-    });
+function crearGraficoBarras(actividades) {
+    const duraciones = actividades.map(actividad => calcularDuracion(actividad.tiempo_inicio, actividad.tiempo_final));
 
-    // Crear el gráfico de barras
     const ctx = document.getElementById('grafico-barras').getContext('2d');
     const grafico = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: Array.from({ length: filas }, (_, i) => i + 1), // Etiquetas para el eje X
+            labels: actividades.map((_, index) => `Intento ${index + 1}`), // Etiquetas para el eje X
             datasets: [{
                 label: 'Duración',
                 data: duraciones, // Datos para el eje Y
@@ -63,30 +60,22 @@ function crearGraficoBarras() {
         },
         options: {
             scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+                y: {
+                    beginAtZero: true
+                }
             }
         }
     });
 }
 
-function crearGraficoLineas() {
-    const filas = $('#actividades-table tbody tr').length;
-    const duraciones = [];
-    $('#actividades-table tbody tr').each(function() {
-        const duracion = parseInt($(this).find('td:nth-child(3)').text()); // Obtener la duración de la tercera columna
-        duraciones.push(duracion);
-    });
+function crearGraficoLineas(actividades) {
+    const duraciones = actividades.map(actividad => calcularDuracion(actividad.tiempo_inicio, actividad.tiempo_final));
 
-    // Crear el gráfico de líneas
     const ctx = document.getElementById('grafico-lineas').getContext('2d');
     const grafico = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: Array.from({ length: filas }, (_, i) => i + 1), // Etiquetas para el eje X
+            labels: actividades.map((_, index) => `Intento ${index + 1}`), // Etiquetas para el eje X
             datasets: [{
                 label: 'Duración',
                 data: duraciones, // Datos para el eje Y
@@ -97,17 +86,57 @@ function crearGraficoLineas() {
         },
         options: {
             scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+                y: {
+                    beginAtZero: true
+                }
             }
         }
     });
 }
 
+function graficoLineasButton(){
+    var lineas = $("#grafico-lineas").css("display") !== "none";
 
+    if(lineas){
+        $("#grafico-lineas").hide();
+    }else{
+        $("#grafico-lineas").show();
+    }
+
+}
+
+function graficoBarrasButton(){
+    var barras = $("#grafico-barras").css("display") !== "none";
+
+    if(barras){
+        $("#grafico-barras").hide();
+    }else{
+        $("#grafico-barras").show();
+    }
+
+}
+
+function descargarExcel() {
+    // Obtener los datos de la tabla
+    const table = document.getElementById('actividades-table');
+    const datos = [];
+    for (let i = 0; i < table.rows.length; i++) {
+        const row = table.rows[i];
+        const rowData = [];
+        for (let j = 0; j < row.cells.length; j++) {
+            rowData.push(row.cells[j].innerText);
+        }
+        datos.push(rowData);
+    }
+
+    // Crear un libro de Excel
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(datos);
+    XLSX.utils.book_append_sheet(wb, ws, 'Actividades');
+
+    // Guardar el libro de Excel
+    XLSX.writeFile(wb, 'actividades.xlsx');
+}
 
 $(document).ready(function() {
     cargarActividades();

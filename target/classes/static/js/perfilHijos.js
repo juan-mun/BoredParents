@@ -118,8 +118,9 @@ function cargarPerfiles() {
                             $('#perfilSelect').append(optionHTML);
                         });
                     },
-                    error: function(error) {
+                    error: function(error,xhr) {
                         console.error('Error al cargar perfiles:', error);
+                        console.error('Error al cargar perfiles:', xhr);
                     }
                 });
             }

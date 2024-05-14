@@ -1,9 +1,9 @@
 var formattedTimeStart;
+var asignacionesPorActividad = {}
 var idActividadSeleccionada;
 const limiteLibrosPorEstante = 5;
 $(document).ready(function() {
     const idNino = localStorage.getItem('idNinoActual');
-    console.log(idNino);
     cargarActividades();
     cargarLibrosEnEstantes(idNino);
 });
@@ -27,8 +27,9 @@ function anadirAsignacion(idActividad, nombreActividad) {
     contentType: 'application/json',
     data: JSON.stringify(postData),
     success: function(response) {
-      $(`#actividad-${idActividad}`).hide();
 
+      $(`#actividad-${idActividad}`).hide();
+      
       // Encuentra la última estantería con espacio o crea una nueva si es necesario
       let estante = encontrarOCrearEstante();
       const libro = $(`
@@ -40,6 +41,9 @@ function anadirAsignacion(idActividad, nombreActividad) {
 
       // Actualiza la clase 'only-book' para el nuevo estado del estante.
       actualizarEstiloDelLibro(estante);
+
+      asignacionesPorActividad[idActividad] = Number(response.id_asignacion);
+      localStorage.setItem("asignacionesPorActividad", JSON.stringify(asignacionesPorActividad));
     },
     error: function(xhr, status, error) {
       console.error('Error creando asignacion: ', error, xhr, status);
@@ -53,8 +57,7 @@ function cargarLibrosEnEstantes(idNino) {
     type: 'GET',
     dataType: 'json',
     success: function(actividades) {  // Cambio de 'asignaciones' a 'actividades'
-      console.log(actividades); // Agregamos esto para depurar
-      actividades.forEach(function(actividad) {  // Iterar sobre el arreglo de actividades
+      actividades.forEach(function(actividad,index) {  // Iterar sobre el arreglo de actividades
         mostrarLibro(actividad.id_actividad, actividad.nombre, actividad.url);  // Mostrar cada libro basado en la actividad
       });
       // El uso de idActividad en $(`#actividad-${idActividad}`).hide(); no es necesario aquí
@@ -75,6 +78,7 @@ function mostrarLibro(idActividad, nombreActividad, urlActividad) {
   libro.click(function() {
       var idDelLibro = $(this).attr('id'); // Esto te dará el ID completo, por ejemplo 'book-123'
       idActividadSeleccionada = idDelLibro.split('-')[1]; // Esto separa 'book' de '123' y toma '123'
+      idAsignacion = asignacionesPorActividad[idActividad];
       
       console.log('ID de Actividad seleccionada:', idActividad); 
       $('#startGameButton').off('click').on('click', function() {
@@ -103,7 +107,7 @@ function iniciarJuego(idActividad, urlActividad) {
 }
 
 function seleccionarEstadisticas() {
-  localStorage.setItem('idActividadActual', idActividadSeleccionada);
+  localStorage.setItem('idAsignacionActual', asignacionesPorActividad[idActividadSeleccionada]);
   window.location.href = 'RegistroActividad.html'; 
 }
 
@@ -115,11 +119,21 @@ function cerrarJuego(){
 
   console.log("Juego cerrado a las: " + formattedTimeEnd);
 
+  const asignacionesGuardadas = localStorage.getItem('asignacionesPorActividad');
+  if (asignacionesGuardadas) {
+      // Convertir la cadena JSON a un objeto JavaScript
+      asignacionesPorActividad = JSON.parse(asignacionesGuardadas);
+  }
+  console.log("DEBUG 1 " + asignacionesPorActividad[1]);
+
   const registroActividadData = {
     tiempo_inicio: formattedTimeStart,
     tiempo_final: formattedTimeEnd,
     actividad: {
-        id_actividad: idActividadSeleccionada // Asegúrate de tener esta variable definida en el scope adecuado
+        id_actividad: idActividadSeleccionada
+    },
+    asignacion: {
+      id_asignacion: asignacionesPorActividad[idActividadSeleccionada]
     }
   };
 

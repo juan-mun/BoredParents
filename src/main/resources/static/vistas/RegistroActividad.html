@@ -5,27 +5,61 @@
     <meta charset="UTF-8">
     <title>Registro de Actividades</title>
     <link rel="stylesheet" href="../css/RegistroActividad.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="../js/RegistroActividad.js"></script>
 </head>
 
 <body>
-    <h1>Registro de Actividades</h1>
-    <table id="actividades-table">
-        <thead>
-            <tr>
-                <th>Tiempo Inicio</th>
-                <th>Tiempo Final</th>
-                <th>Duracion</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Los datos se cargarán aquí mediante AJAX -->
-        </tbody>
-    </table>
-    <canvas id="grafico-barras" width="200" height="200"></canvas>
-    <canvas id="grafico-lineas" width="400" height="200"></canvas>
-    <script src="../js/RegistroActividad.js"></script>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">ESTADISTICAS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="perfilHijos.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="BibliotecaVirtual.html">Biblioteca Virtual</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="lifebook.html">Libro De La Vida</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <table id="actividades-table" class="table">
+            <thead>
+                <tr>
+                    <th>Tiempo Inicio</th>
+                    <th>Tiempo Final</th>
+                    <th>Duración</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Los datos se cargarán aquí mediante AJAX -->
+            </tbody>
+        </table>
+
+        <div class="canvas-container">
+            <canvas id="grafico-barras" style="display: none;"></canvas>
+            <canvas id="grafico-lineas" style="display: none;"></canvas>
+        </div>
+        <button id="mostrarGraficoBarras" class="btn btn-primary" onclick="graficoBarrasButton()">Mostrar Gráfico de Barras</button>
+        <button id="mostrarGraficoLineas" class="btn btn-primary" onclick="graficoLineasButton()">Mostrar Gráfico de Líneas</button>
+        <button id="descargarExcel" class="btn btn-primary" onclick="descargarExcel()">Descargar a Excel</button>
+    </div>
 </body>
 
 </html>

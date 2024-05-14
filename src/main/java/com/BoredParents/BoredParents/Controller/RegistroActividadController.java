@@ -31,9 +31,4 @@ public class RegistroActividadController {
         return RegistroActividadService.getRegistroActividadsById(id);
     }
 
-    @GetMapping("/get")
-    public List<RegistroActividad> getRegistroActividads() {
-        return RegistroActividadService.getRegistroActividads();
-    }
-
 }
