@@ -26,9 +26,9 @@ public class RegistroActividadController {
         return RegistroActividadService.saveregistroactividad(registroactividad);
     }
 
-    @GetMapping("/registrosPorActividades/{id}")
-    public List<RegistroActividad> getRegistroActividadesById(@PathVariable Long id) {
-        return RegistroActividadService.getRegistroActividadsById(id);
+    @GetMapping("/registrosPorActividades/{idNino}/{idActividad}")
+    public List<RegistroActividad> getRegistroActividadesById(@PathVariable Long idNino, @PathVariable Long idActividad) {
+        return RegistroActividadService.getRegistroActividadsById(idNino, idActividad);
     }
 
 }

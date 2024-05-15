@@ -23,10 +23,11 @@ public class RegistroActividadService {
         return registroactividadRepository.getRegistroActividads();
     }
 
-    public List<RegistroActividad> getRegistroActividadsById(Long id) {
+    public List<RegistroActividad> getRegistroActividadsById(Long idNino, Long idActividad) {
         List<RegistroActividad> allRegistroActividades = registroactividadRepository.getRegistroActividads();
         return allRegistroActividades.stream()
-                .filter(registro -> registro.getAsignacion().getId_asignacion().equals(id))
+                .filter(registro -> registro.getAsignacion().getNino().getId_nino().equals(idNino) &&
+                                    registro.getAsignacion().getId_asignacion().equals(idActividad))
                 .collect(Collectors.toList());
     }    
 

@@ -1,12 +1,12 @@
+const idNino = localStorage.getItem('idNinoActual');
 const idActividad = localStorage.getItem('idAsignacionActual');
-console.log("El id de la actividad es: " + idActividad + "y su tipo es: " + typeof(Number(idActividad)));
 
 function cargarActividades() {
     $.ajax({
-        url: '/RegistroActividadController/registrosPorActividades/' + idActividad, 
+        url: '/RegistroActividadController/registrosPorActividades/' + idNino + '/' + idActividad, 
         type: 'GET',
         dataType: 'json',
-        success: function(actividades) {
+        success: function(actividades) {    
             const tableBody = $('#actividades-table tbody');
             tableBody.empty(); // Asegúrate de limpiar la tabla antes de agregar nuevas filas
             actividades.forEach(function(actividad) {
