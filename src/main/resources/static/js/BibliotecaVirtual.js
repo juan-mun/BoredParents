@@ -133,7 +133,7 @@ function cerrarJuego(){
         id_actividad: idActividadSeleccionada
     },
     asignacion: {
-      id_asignacion: asignacionesPorActividad[idActividadSeleccionada]
+      id_asignacion: 1
     }
   };
 

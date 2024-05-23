@@ -3,7 +3,7 @@ const idActividad = localStorage.getItem('idAsignacionActual');
 
 function cargarActividades() {
     $.ajax({
-        url: '/RegistroActividadController/registrosPorActividades/' + idNino + '/' + idActividad, 
+        url: '/RegistroActividadController/registrosPorActividades/' + idNino + '/' + 1, 
         type: 'GET',
         dataType: 'json',
         success: function(actividades) {    

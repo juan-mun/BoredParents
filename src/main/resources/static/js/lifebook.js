@@ -4,40 +4,17 @@ const idNino = localStorage.getItem('idNinoActual');
 console.log(idNino);
 
 function confirmCrop() {
-    croppieInstance.result({ type: 'canvas', size: 'viewport' }).then(function(canvas) {
-        canvas.toBlob(function(blob) {
-            // Ahora tienes la imagen como un Blob
-            var reader = new FileReader();
-            reader.readAsArrayBuffer(blob);
-            reader.onloadend = function() {
-                var byteArr = new Uint8Array(reader.result);
-                // Ahora byteArr es tu arreglo de bytes
-                enviarImagenAlServidor(byteArr);
-            };
-        }, 'image/jpg');  // Asegúrate de elegir el formato de imagen adecuado
-    });
-}
-
-function enviarImagenAlServidor(byteArray) {
-    var data = {
-        content: Array.from(byteArray),  // Convertir el Uint8Array a un arreglo normal
-        contentType: 'image/jpg',  // Asegúrate de que el contentType coincida con el formato del blob
-        title: 'Título de la imagen',
-        description: 'Descripción opcional',
-        eventDate: new Date().toISOString().slice(0, 10)  // Formato de fecha YYYY-MM-DD
-    };
-
-    $.ajax({
-        url: '/lifebook/saveMaterial',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: function(response) {
-            console.log('Success:', response);
-        },
-        error: function(xhr, status, error) {
-            console.error('Error:', error);
-        }
+    // Obtener el resultado de Croppie
+    croppieInstance.result({ type: 'canvas', size: 'viewport' }).then(function(img) {
+        const imageDisplay = document.getElementById(`imageDisplay${currentPage}`);
+        imageDisplay.innerHTML = `<img src="${img}" alt="Imagen recortada">`;
+        const uploadArea = document.getElementById(`uploadArea${currentPage}`);
+        uploadArea.style.display = 'none';
+        // Ocultar el modal
+        document.getElementById('croppieModal').style.display = 'none';
+        // Destruir la instancia de Croppie para evitar usos futuros
+        croppieInstance.destroy();
+        croppieInstance = null;
     });
 }
 
@@ -82,6 +59,13 @@ function hideCover() {
 }
 
 function addNewPage() {
+    if (currentPage > 0) {
+        const pageData = getPageData(currentPage);
+        if (pageData) {
+            savePageData(pageData);
+        }
+    }
+
     currentPage++;
 
     const pages = document.getElementById('pages');
@@ -97,12 +81,74 @@ function addNewPage() {
             <input type="file" onchange="handleImageUpload(this, ${currentPage})" style="display:none;">
             <div id="imageDisplay${currentPage}"></div>
         </div>
-        <textarea placeholder="Escribe una descripción para la foto..."></textarea>
+        <textarea id="description${currentPage}" placeholder="Escribe una descripción para la foto..."></textarea>
         <button onclick="addNewPage()">Siguiente Página</button>
         ${currentPage > 1 ? `<button onclick="previousPage(${currentPage - 1})">Página Anterior</button>` : ''}
     `;
     pages.appendChild(newPage);
     updatePageView();
+}
+
+function getPageData(pageNumber) {
+    const imageDisplay = document.getElementById(`imageDisplay${pageNumber}`);
+    
+    if (!imageDisplay) {
+        console.error(`No se encontró el elemento con id imageDisplay${pageNumber}`);
+        return null;
+    }
+
+    const descriptionTextarea = document.getElementById(`description${pageNumber}`);
+         
+    if (!descriptionTextarea || descriptionTextarea.tagName !== 'TEXTAREA') {
+        console.error(`No se encontró un textarea junto a imageDisplay${pageNumber}`);
+        return null;
+    }
+
+    const description = descriptionTextarea.value;
+    const img = imageDisplay.querySelector('img');
+
+    let content = null;
+    if (img) {
+        const base64Image = img.src.split(',')[1];
+        content = base64ToBytes(base64Image);
+    }
+    console.log(typeof(content));
+    return {
+        title: `Página ${pageNumber}`,
+        description: description,
+        content: content,
+        contentType: 'image/jpeg',
+        eventDate: new Date().toISOString().split('T')[0],
+        nino: {
+            id_nino: idNino
+        }
+    };
+}
+
+function base64ToBytes(base64) {
+    const binaryString = atob(base64);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
+}
+
+function savePageData(pageData) {
+    console.log('Datos a enviar:', pageData);  
+    $.ajax({
+        url: '/lifebook/saveMaterial',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(pageData),
+        success: function(response) {
+            console.log('Página guardada con éxito:', response);
+        },
+        error: function(error) {
+            console.error('Error al guardar la página:', error);
+            alert('Hubo un error al guardar los datos de la página. Inténtalo de nuevo.');
+        }
+    });
 }
 
 function previousPage(pageNumber) {
